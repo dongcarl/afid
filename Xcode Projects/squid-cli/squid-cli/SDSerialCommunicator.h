@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import <Cocoa/Cocoa.h>
+#import "SDIncomingStack.h"
 
 // import IOKit headers
 #include <IOKit/IOKitLib.h>
@@ -27,5 +28,6 @@
 
 @property struct termios gOriginalTTYAttrs;
 @property int serialFileDescriptor;
+@property SDIncomingStack *incomingStack;
 
 @end

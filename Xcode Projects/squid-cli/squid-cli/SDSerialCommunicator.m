@@ -12,6 +12,7 @@
 
 @synthesize serialFileDescriptor;
 @synthesize gOriginalTTYAttrs;
+@synthesize incomingStack = _incomingStack;
 
 //- (SDSerialCommunicator *)initWithBaudRate: (speed_t)baud
 //{
@@ -41,9 +42,11 @@
 	long numBytes = 0; // number of bytes read during read
 	NSString *text; // incoming text from the serial port
     char endlinechar = '\n';
-    NSString *endline = [NSString stringWithFormat:@"%c", endlinechar];
+    NSString *endline = [[NSString alloc] initWithFormat:@"%c", endlinechar];
     
     NSString *currentLine;
+    self.incomingStack = [[SDIncomingStack alloc]init];
+    
     while(TRUE) {
 		// read() blocks until some data is available or the port is closed
 		numBytes = read(serialFileDescriptor, byte_buffer, BUFFER_SIZE); // read up to the size of the buffer
@@ -63,12 +66,13 @@
         
         long endlineloc = [text rangeOfString:endline].location;
         
-        if (endlineloc != NSNotFound)
-        { 
+        if (endlineloc != NSNotFound) //if it contains the endline...
+        {
             currentLine = [currentLine stringByAppendingString:[text substringToIndex:endlineloc]];
-            NSLog(@"%@", currentLine);
+//            NSLog(@"%@", currentLine);
+            [self.incomingStack push:[currentLine substringToIndex:currentLine.length-2]];
             currentLine = [[NSString alloc]init];
-            currentLine = [currentLine stringByAppendingString:[text substringFromIndex:endlineloc+1]];
+            currentLine = [currentLine stringByAppendingString:[text substringFromIndex:endlineloc+[endline length]]];
         }
         else
         {
