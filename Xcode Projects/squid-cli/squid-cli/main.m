@@ -15,11 +15,10 @@ int main(int argc, const char * argv[])
 
     @autoreleasepool
     {     
-        SDSerialCommunicator *comm = [[SDSerialCommunicator alloc]init];
-        [comm listAvailiableSerialPorts];
         speed_t baud = B9600;
-        [comm selectSerialPort:@"/dev/cu.usbmodemfa1331" baud:baud];
+        [[[SDSerialCommunicator alloc]init] autoSelectSerialPortWithBaud:baud];
         
+        NSLog(@"program terminating...");
     }
     return 0;
 }
