@@ -21,10 +21,12 @@
 @interface SDSerialCommunicator : NSObject
 
 - (void)incomingTextUpdateThread;//: (NSThread *) parentThread;
-- (void)listAvailiableSerialPorts;
+- (NSArray *)availiableSerialPorts;
 //- (void)openSerialPortAtBaudRate: (speed_t)baudRate;
 - (NSString *) openSerialPort: (NSString *)serialPortFile baud: (speed_t)baudRate;
-- (void) selectSerialPort: (NSString *)serialPortFile baud: (speed_t)baudRate;
+- (NSString *) selectSerialPort: (NSString *)serialPortFile baud: (speed_t)baudRate;
+- (void)autoSelectSerialPortWithBaud: (speed_t)baudRate;
+
 
 @property struct termios gOriginalTTYAttrs;
 @property int serialFileDescriptor;

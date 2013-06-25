@@ -21,18 +21,56 @@
 //    return result;
 //}
 
-- (void) selectSerialPort: (NSString *)serialPortFile baud: (speed_t)baudRate
+- (NSString *) selectSerialPort: (NSString *)serialPortFile baud: (speed_t)baudRate
 {
     NSString *error = [self openSerialPort: serialPortFile baud:baudRate];
 	
 	if(error!=nil)
     {
         NSLog(@"%@", error);
+        return error;
 	}
     else
     {
 		[self incomingTextUpdateThread];
+        return nil;
 	}
+}
+
+- (void)autoSelectSerialPortWithBaud: (speed_t)baudRate
+{
+    NSArray *serialPortArray = [self availiableSerialPorts];
+    for (NSString *port in serialPortArray)
+    {
+        NSLog(@"trying to connect to serial port: %@...", port);
+        if ([port hasPrefix:@"/dev/cu.Bluetooth"])
+        {
+            NSLog(@"this serial port is a bluetooth port, skipping...");
+        }
+        
+        else
+        {
+            NSString *errorMessage = [self selectSerialPort:port baud:baudRate];
+            if (errorMessage!=nil)
+            {
+                NSLog(@"serial port connection failed, error: %@", errorMessage);
+            }
+            else
+            {
+                NSLog(@"serial connection established, recieving data if availiable");
+                break;
+            }
+        }
+        
+        if([port isEqualTo:[serialPortArray lastObject]])
+        {
+            NSLog(@"no more serial ports to try");
+        }
+        else
+        {
+            NSLog(@"trying next serial port...");
+        }
+    }
 }
 
 - (void)incomingTextUpdateThread//: (NSThread *) parentThread
@@ -82,8 +120,10 @@
     }
 }
 
-- (void)listAvailiableSerialPorts
+- (NSArray *)availiableSerialPorts
 {
+    NSMutableArray *result = [[NSMutableArray alloc]init];
+    
     io_object_t serialPort;
     io_iterator_t serialPortIterator;
     
@@ -93,15 +133,20 @@
                                  IOServiceMatching(kIOSerialBSDServiceValue),
                                  &serialPortIterator);
     
+    NSLog(@"all serial ports:");
     // loop through all the serial ports
     while ((serialPort = IOIteratorNext(serialPortIterator)))
     {
+        NSString *serialPortOfInterest = [[NSString alloc]initWithString:(NSString *)CFBridgingRelease(IORegistryEntryCreateCFProperty(serialPort, CFSTR(kIOCalloutDeviceKey),kCFAllocatorDefault, 0))];
         // you want to do something useful here
-        NSLog(@"%@",(NSString *)CFBridgingRelease(IORegistryEntryCreateCFProperty(serialPort, CFSTR(kIOCalloutDeviceKey),kCFAllocatorDefault, 0)));
+        NSLog(@"    %@",serialPortOfInterest);
+        [result addObject:serialPortOfInterest];
         IOObjectRelease(serialPort);
     }
     
     IOObjectRelease(serialPortIterator);
+    
+    return [[NSArray alloc] initWithArray:result copyItems:YES];
 }
 
 
