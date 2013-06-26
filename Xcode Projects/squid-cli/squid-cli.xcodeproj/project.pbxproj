@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C94B69DA177A2686000595A3 /* SDGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C94B69D9177A2686000595A3 /* SDGestureRecognizer.m */; };
 		C9BA69541776534B003A486D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BA69531776534B003A486D /* Foundation.framework */; };
 		C9BA69571776534B003A486D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BA69561776534B003A486D /* main.m */; };
 		C9BA695B1776534B003A486D /* squid_cli.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9BA695A1776534B003A486D /* squid_cli.1 */; };
@@ -29,6 +30,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C94B69D7177A256C000595A3 /* sketch_jun04a.ino */ = {isa = PBXFileReference; explicitFileType = sourcecode.c; path = sketch_jun04a.ino; sourceTree = "<group>"; };
+		C94B69D8177A2685000595A3 /* SDGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDGestureRecognizer.h; sourceTree = "<group>"; };
+		C94B69D9177A2686000595A3 /* SDGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGestureRecognizer.m; sourceTree = "<group>"; };
 		C9BA69501776534B003A486D /* squid-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "squid-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BA69531776534B003A486D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9BA69561776534B003A486D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -83,6 +87,7 @@
 		C9BA69551776534B003A486D /* squid-cli */ = {
 			isa = PBXGroup;
 			children = (
+				C94B69D7177A256C000595A3 /* sketch_jun04a.ino */,
 				C9BA69561776534B003A486D /* main.m */,
 				C9BA695A1776534B003A486D /* squid_cli.1 */,
 				C9BA69581776534B003A486D /* Supporting Files */,
@@ -90,6 +95,8 @@
 				C9BA696417765484003A486D /* SDSerialCommunicator.m */,
 				C9EBCFA61779DD6600234B48 /* SDIncomingStack.h */,
 				C9EBCFA71779DD6600234B48 /* SDIncomingStack.m */,
+				C94B69D8177A2685000595A3 /* SDGestureRecognizer.h */,
+				C94B69D9177A2686000595A3 /* SDGestureRecognizer.m */,
 			);
 			path = "squid-cli";
 			sourceTree = "<group>";
@@ -156,6 +163,7 @@
 				C9BA69571776534B003A486D /* main.m in Sources */,
 				C9BA696517765484003A486D /* SDSerialCommunicator.m in Sources */,
 				C9EBCFA81779DD6600234B48 /* SDIncomingStack.m in Sources */,
+				C94B69DA177A2686000595A3 /* SDGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
