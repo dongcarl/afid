@@ -12,6 +12,7 @@
 		C9BA695B1776534B003A486D /* squid_cli.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9BA695A1776534B003A486D /* squid_cli.1 */; };
 		C9BA69621776538F003A486D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BA69611776538F003A486D /* IOKit.framework */; };
 		C9BA696517765484003A486D /* SDSerialCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BA696417765484003A486D /* SDSerialCommunicator.m */; };
+		C9EBCFA81779DD6600234B48 /* SDIncomingStack.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EBCFA71779DD6600234B48 /* SDIncomingStack.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +37,8 @@
 		C9BA69611776538F003A486D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		C9BA696317765484003A486D /* SDSerialCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSerialCommunicator.h; sourceTree = "<group>"; };
 		C9BA696417765484003A486D /* SDSerialCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSerialCommunicator.m; sourceTree = "<group>"; };
+		C9EBCFA61779DD6600234B48 /* SDIncomingStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDIncomingStack.h; sourceTree = "<group>"; };
+		C9EBCFA71779DD6600234B48 /* SDIncomingStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDIncomingStack.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				C9BA69581776534B003A486D /* Supporting Files */,
 				C9BA696317765484003A486D /* SDSerialCommunicator.h */,
 				C9BA696417765484003A486D /* SDSerialCommunicator.m */,
+				C9EBCFA61779DD6600234B48 /* SDIncomingStack.h */,
+				C9EBCFA71779DD6600234B48 /* SDIncomingStack.m */,
 			);
 			path = "squid-cli";
 			sourceTree = "<group>";
@@ -150,6 +155,7 @@
 			files = (
 				C9BA69571776534B003A486D /* main.m in Sources */,
 				C9BA696517765484003A486D /* SDSerialCommunicator.m in Sources */,
+				C9EBCFA81779DD6600234B48 /* SDIncomingStack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
