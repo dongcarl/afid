@@ -15,7 +15,7 @@ int main(int argc, const char * argv[])
 
     @autoreleasepool
     {     
-        speed_t baud = B9600;
+        speed_t baud = 9600;
         [[[SDSerialCommunicator alloc]init] autoSelectSerialPortWithBaud:baud];
         
         NSLog(@"program terminating...");
