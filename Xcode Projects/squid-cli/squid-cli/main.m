@@ -20,8 +20,7 @@ int main(int argc, const char * argv[])
 //        [[[SDSerialCommunicator alloc]init] autoSelectSerialPortWithBaud:baud];
 //        
 //        NSLog(@"program terminating...");
-        NSArray *testDefinitions = [[NSArray alloc]initWithObjects: [[NSNumber alloc]initWithInt:123], [[NSNumber alloc]initWithInt:123], nil];
-        
+        NSArray *testDefinitions = [[NSArray alloc]initWithObjects: [[NSNumber alloc]initWithInt:123], [[NSNumber alloc]initWithInt:123], nil];        
         NSMutableArray *ZDefinition = [[NSMutableArray alloc] init];
         NSMutableArray *ZTest = [[NSMutableArray alloc]init];
         NSMutableArray *ZTest2 = [[NSMutableArray alloc]init];
