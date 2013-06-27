@@ -26,7 +26,7 @@
 {
     
     NSString *newCharacter = [[NSString alloc] initWithString:character];
-    NSNumber *bufferValue = [[NSNumber alloc]initWithInt:30];
+    NSNumber *bufferValue = [[NSNumber alloc]initWithInt:40];
     
     NSArray *newUpperBound = [self changeEachNSNumberInArray:newDefinition by:bufferValue deltaIsPositive:YES];
     NSArray *newLowerBound = [self changeEachNSNumberInArray:newDefinition by:bufferValue deltaIsPositive:NO];

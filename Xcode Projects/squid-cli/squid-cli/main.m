@@ -13,20 +13,19 @@
 
 int main(int argc, const char * argv[])
 {
-
+    
     @autoreleasepool
-    {     
+    {
         speed_t baud = B9600;
         SDSerialCommunicator *comm = [[SDSerialCommunicator alloc]init];
         
-        NSMutableArray *testDefinitions = [[NSMutableArray alloc]init];
-
-        for (int i = 0; i < 10; i++)
-        {
-            [testDefinitions addObject:[[NSNumber alloc]initWithInt:11]];
-        }
-        
-        [comm.incomingStack.recognizer addActionDefinition:[[NSArray alloc]initWithArray:testDefinitions copyItems:YES]  for:@"success"];
+//        NSMutableArray *testDefinitions = [[NSMutableArray alloc]init];
+//        for (int i = 0; i < 10; i++)
+//        {
+//            [testDefinitions addObject:[[NSNumber alloc]initWithInt:11]];
+//        }
+//        
+//        [comm.incomingStack.recognizer addActionDefinition:[[NSArray alloc]initWithArray:testDefinitions copyItems:YES]  for:@"success"];
         
         NSMutableArray *aDefinitions = [[NSMutableArray alloc]initWithObjects:
                                         [[NSNumber alloc]initWithInt:912],
@@ -78,9 +77,13 @@ int main(int argc, const char * argv[])
         [comm.incomingStack.recognizer addActionDefinition:[[NSArray alloc]initWithArray:cDefinitions copyItems:YES]  for:@"C"];
         [comm.incomingStack.recognizer addActionDefinition:[[NSArray alloc]initWithArray:dDefinitions copyItems:YES]  for:@"D"];
         
+        NSLog(@"working with definition for %@ with upper %@ and lower %@", [[comm.incomingStack.recognizer.definitions objectAtIndex:0] correspondingCharacter],
+              [[comm.incomingStack.recognizer.definitions objectAtIndex:0] upperBound],
+              [[comm.incomingStack.recognizer.definitions objectAtIndex:0] lowerBound]);
+        
         NSLog(@"working with definition for %@ with upper %@ and lower %@", [[comm.incomingStack.recognizer.definitions objectAtIndex:1] correspondingCharacter],
-                                                                            [[comm.incomingStack.recognizer.definitions objectAtIndex:1] upperBound],
-                                                                            [[comm.incomingStack.recognizer.definitions objectAtIndex:1] lowerBound]);
+              [[comm.incomingStack.recognizer.definitions objectAtIndex:1] upperBound],
+              [[comm.incomingStack.recognizer.definitions objectAtIndex:1] lowerBound]);
         
         NSLog(@"working with definition for %@ with upper %@ and lower %@", [[comm.incomingStack.recognizer.definitions objectAtIndex:2] correspondingCharacter],
               [[comm.incomingStack.recognizer.definitions objectAtIndex:2] upperBound],
@@ -89,10 +92,6 @@ int main(int argc, const char * argv[])
         NSLog(@"working with definition for %@ with upper %@ and lower %@", [[comm.incomingStack.recognizer.definitions objectAtIndex:3] correspondingCharacter],
               [[comm.incomingStack.recognizer.definitions objectAtIndex:3] upperBound],
               [[comm.incomingStack.recognizer.definitions objectAtIndex:3] lowerBound]);
-        
-        NSLog(@"working with definition for %@ with upper %@ and lower %@", [[comm.incomingStack.recognizer.definitions objectAtIndex:4] correspondingCharacter],
-              [[comm.incomingStack.recognizer.definitions objectAtIndex:4] upperBound],
-              [[comm.incomingStack.recognizer.definitions objectAtIndex:4] lowerBound]);
         
         
         [comm autoSelectSerialPortWithBaud:baud];
