@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SDRecognizer.h"
 
 @interface SDIncomingStack : NSObject
 
 @property NSMutableArray *gestureStack;
-@property NSMutableArray *pendingGesture;
+@property NSArray *pendingGesture;
+@property (nonatomic) SDRecognizer *recognizer;
 
 - (void)pushToPending: (NSString *)incomingGestureString;
 - (void)push: (NSString *)incomingGestureString;

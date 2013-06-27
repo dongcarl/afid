@@ -10,10 +10,10 @@
 
 @interface SDActionDefinition : NSObject
 
-@property NSArray *upperBound;
-@property NSArray *lowerBound;
+@property (nonatomic) NSArray *upperBound;
+@property (nonatomic) NSArray *lowerBound;
 
-@property NSString *correspondingCharacter;
+@property (nonatomic) NSString *correspondingCharacter;
 
 
 - (SDActionDefinition *)initWithCorrespondingCharacter:(NSString *)character

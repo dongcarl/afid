@@ -21,6 +21,15 @@
 //    return result;
 //}
 
+- (SDIncomingStack *)incomingStack
+{
+    if(!_incomingStack)
+    {
+        _incomingStack = [[SDIncomingStack alloc]init];
+    }
+    return _incomingStack;
+}
+
 - (NSString *) selectSerialPort: (NSString *)serialPortFile baud: (speed_t)baudRate
 {
     NSString *error = [self openSerialPort: serialPortFile baud:baudRate];
@@ -83,18 +92,35 @@
     NSString *endline = [[NSString alloc] initWithFormat:@"%c", endlinechar];
     
     NSString *currentLine;
-    self.incomingStack = [[SDIncomingStack alloc]init];
+    
+    //    int i = 0;
+    //    sleep(10);
     
     while(TRUE)
     {
+        
 		// read() blocks until some data is available or the port is closed
 		numBytes = read(serialFileDescriptor, byte_buffer, BUFFER_SIZE); // read up to the size of the buffer
+        
+        
+        
 		if(numBytes>0)
         {
-			// create an NSString from the incoming bytes (the bytes aren't null terminated)
-			text = [NSString stringWithCString:byte_buffer length:numBytes];
-			
+            
+//			// create an NSString from the incoming bytes (the bytes aren't null terminated)
+//			text = [NSString stringWithCString:byte_buffer encoding:NSASCIIStringEncoding];
+            
+            text = [[NSString alloc]initWithBytes:byte_buffer length:numBytes encoding:NSASCIIStringEncoding];
 //            NSLog(@"%@", text);
+            
+            
+//            NSLog(@"%ld: %@", numBytes, text);
+//            if ([text characterAtIndex:([text length]-1)] == endlinechar || )
+//            {
+//                <#statements#>
+//            }
+//            NSMutableArray *arrayOfLine = [[NSMutableArray alloc]initWithArray:[text componentsSeparatedByString:endline copyItems:YES]];
+            //            NSLog(@"%@", text);
 			// this text can't be directly sent to the text area from this thread
 			//  BUT, we can call a selctor on the main thread.
 		}
@@ -109,7 +135,7 @@
         {
             currentLine = [currentLine stringByAppendingString:[text substringToIndex:endlineloc]];
 //            NSLog(@"%@", currentLine);
-            [self.incomingStack push:[currentLine substringToIndex:currentLine.length-2]];
+            [self.incomingStack push:[currentLine substringToIndex:currentLine.length]];
             currentLine = [[NSString alloc]init];
             currentLine = [currentLine stringByAppendingString:[text substringFromIndex:endlineloc+[endline length]]];
         }

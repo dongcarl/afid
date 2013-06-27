@@ -30,6 +30,6 @@
 
 @property struct termios gOriginalTTYAttrs;
 @property int serialFileDescriptor;
-@property SDIncomingStack *incomingStack;
+@property (nonatomic) SDIncomingStack *incomingStack;
 
 @end

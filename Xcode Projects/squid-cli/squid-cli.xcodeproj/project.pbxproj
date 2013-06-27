@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C94EED32177B4A680028E628 /* SDActionDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = C94EED31177B4A680028E628 /* SDActionDefinition.m */; };
-		C94EED35177B4AEB0028E628 /* SDDefinitionMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = C94EED34177B4AEB0028E628 /* SDDefinitionMutableArray.m */; };
+		C94EED35177B4AEB0028E628 /* SDRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C94EED34177B4AEB0028E628 /* SDRecognizer.m */; };
 		C9BA69541776534B003A486D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BA69531776534B003A486D /* Foundation.framework */; };
 		C9BA69571776534B003A486D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BA69561776534B003A486D /* main.m */; };
 		C9BA695B1776534B003A486D /* squid_cli.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9BA695A1776534B003A486D /* squid_cli.1 */; };
@@ -34,8 +34,8 @@
 		C94B69D7177A256C000595A3 /* sketch_jun04a.ino */ = {isa = PBXFileReference; explicitFileType = sourcecode.c; path = sketch_jun04a.ino; sourceTree = "<group>"; };
 		C94EED30177B4A680028E628 /* SDActionDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDActionDefinition.h; sourceTree = "<group>"; };
 		C94EED31177B4A680028E628 /* SDActionDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDActionDefinition.m; sourceTree = "<group>"; };
-		C94EED33177B4AEB0028E628 /* SDDefinitionMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDDefinitionMutableArray.h; sourceTree = "<group>"; };
-		C94EED34177B4AEB0028E628 /* SDDefinitionMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDDefinitionMutableArray.m; sourceTree = "<group>"; };
+		C94EED33177B4AEB0028E628 /* SDRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDRecognizer.h; sourceTree = "<group>"; };
+		C94EED34177B4AEB0028E628 /* SDRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDRecognizer.m; sourceTree = "<group>"; };
 		C9BA69501776534B003A486D /* squid-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "squid-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BA69531776534B003A486D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9BA69561776534B003A486D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -100,8 +100,8 @@
 				C9EBCFA71779DD6600234B48 /* SDIncomingStack.m */,
 				C94EED30177B4A680028E628 /* SDActionDefinition.h */,
 				C94EED31177B4A680028E628 /* SDActionDefinition.m */,
-				C94EED33177B4AEB0028E628 /* SDDefinitionMutableArray.h */,
-				C94EED34177B4AEB0028E628 /* SDDefinitionMutableArray.m */,
+				C94EED33177B4AEB0028E628 /* SDRecognizer.h */,
+				C94EED34177B4AEB0028E628 /* SDRecognizer.m */,
 			);
 			path = "squid-cli";
 			sourceTree = "<group>";
@@ -169,7 +169,7 @@
 				C9BA696517765484003A486D /* SDSerialCommunicator.m in Sources */,
 				C9EBCFA81779DD6600234B48 /* SDIncomingStack.m in Sources */,
 				C94EED32177B4A680028E628 /* SDActionDefinition.m in Sources */,
-				C94EED35177B4AEB0028E628 /* SDDefinitionMutableArray.m in Sources */,
+				C94EED35177B4AEB0028E628 /* SDRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

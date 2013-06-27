@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 catswearingbreadhats. All rights reserved.
 //
 
-#import "SDDefinitionMutableArray.h"
+#import "SDRecognizer.h"
 
-@implementation SDDefinitionMutableArray
+@implementation SDRecognizer
 
 @synthesize definitions = _definitions;
 
@@ -26,7 +26,7 @@
 {
     
     NSString *newCharacter = [[NSString alloc] initWithString:character];
-    NSNumber *bufferValue = [[NSNumber alloc]initWithInt:10];
+    NSNumber *bufferValue = [[NSNumber alloc]initWithInt:30];
     
     NSArray *newUpperBound = [self changeEachNSNumberInArray:newDefinition by:bufferValue deltaIsPositive:YES];
     NSArray *newLowerBound = [self changeEachNSNumberInArray:newDefinition by:bufferValue deltaIsPositive:NO];
@@ -84,12 +84,14 @@
         
     }
     
-    [self.definitions addObject:[[SDActionDefinition alloc] initWithCorrespondingCharacter:newCharacter upperBound:newUpperBound lowerBound:newLowerBound]];   
+    [self.definitions addObject:[[SDActionDefinition alloc] initWithCorrespondingCharacter:newCharacter upperBound:newUpperBound lowerBound:newLowerBound]];
+    //NSLog(@"added definition for %@ with upperBound %@ and lower bound %@", newCharacter, newUpperBound, newLowerBound);
     
 }
 
 - (NSString *)isAction:(NSArray *)input
 {
+    //NSLog(@"operating isAction with upper %@ and lower %@", [self.definitions.lastObject upperBound], [self.definitions.lastObject lowerBound]);
     
     NSString *result = [[NSString alloc]init];
     

@@ -10,10 +10,10 @@
 
 @implementation SDActionDefinition
 
-@synthesize upperBound;
-@synthesize lowerBound;
+@synthesize upperBound = _upperBound;
+@synthesize lowerBound = _lowerBound;
 
-@synthesize correspondingCharacter;
+@synthesize correspondingCharacter = _correspondingCharacter;
 
 - (SDActionDefinition *)initWithCorrespondingCharacter:(NSString *)character
                                             upperBound:(NSArray *)upper

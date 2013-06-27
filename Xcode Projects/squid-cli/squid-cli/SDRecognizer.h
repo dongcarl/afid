@@ -9,7 +9,7 @@
 #import "SDActionDefinition.h"
 #import <Foundation/Foundation.h>
 
-@interface SDDefinitionMutableArray : NSObject
+@interface SDRecognizer : NSObject
 
 @property (nonatomic) NSMutableArray *definitions;
 
