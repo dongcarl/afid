@@ -16,8 +16,12 @@
 @property (nonatomic) NSString *correspondingCharacter;
 
 
-- (SDActionDefinition *)initWithCorrespondingCharacter:(NSString *)character
-                                            upperBound:(NSArray *)upper
-                                            lowerBound:(NSArray *)lower;
+- (SDActionDefinition *)initWithUpperBound:(NSArray *)upper
+                             andLowerBound:(NSArray *)lower
+			        forCorrespondingString:(NSString *)string;
+- (SDActionDefinition *)initWithGestureVector:(NSArray *)gestureVector
+									forString:(NSString *)string;
 
+
+- (void)modifyBoundsWithGestureVector:(NSArray *)gestureVector;
 @end

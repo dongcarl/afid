@@ -1,34 +1,35 @@
 //
-//  SDIncomingStack.m
-//  squid-cli
+//  AFIncomingStack.m
+//  afid-gui
 //
-//  Created by Carl Dong on 6/25/13.
+//  Created by Carl Dong on 6/28/13.
 //  Copyright (c) 2013 catswearingbreadhats. All rights reserved.
 //
 
-#import "SDIncomingStack.h"
+#import "AFRecognizer.h"
+#import "AFIncomingStack.h"
 
-@implementation SDIncomingStack
+@implementation AFIncomingStack
 
 @synthesize gestureStack = _gestureStack;
 @synthesize pendingGesture = _pendingGesture;
 @synthesize recognizer = _recognizer;
 
-- (SDRecognizer *)recognizer
+- (AFRecognizer *)recognizer
 {
     if(!_recognizer)
     {
-        _recognizer = [[SDRecognizer alloc]init];
+        _recognizer = [[AFRecognizer alloc]init];
     }
     return _recognizer;
 }
 
 - (void)pushToPending: (NSArray *)incomingGestureVector
 {
-	if ([incomingGestureVector count] != [[[self.recognizer.definitionStack lastObject]upperBound] count])
+	if ([incomingGestureVector count] != [[[self.recognizer.actionDefinitionStack lastObject]upperBound] count])
 	{
 		//NSLog(@"incoming array has more dimensions than definition!");
-
+        
 	}
 	else
 	{
@@ -36,12 +37,19 @@
 	}
 }
 
-- (void)push:(NSArray *)incomingGestureVector
+- (void)push: (NSArray *)incomingGestureVector
 {
 	[self pushToPending:incomingGestureVector];
 	[self.gestureStack addObject:self.pendingGesture];
-
+    
 	self.pendingGesture = nil;
+}
+
+- (NSArray *)popFromPending
+{
+    NSArray *result = self.pendingGesture;
+    self.pendingGesture = nil;
+    return result;
 }
 
 - (NSArray *)pop
@@ -53,8 +61,8 @@
 
 - (void)clearAll
 {
-    self.gestureStack = [[NSMutableArray alloc]init];
-    self.pendingGesture = [[NSArray alloc]init];
+    self.gestureStack = nil;
+    self.pendingGesture = nil;
 }
 
 @end

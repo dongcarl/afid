@@ -10,7 +10,7 @@
 
 @implementation SDSerialCommunicator
 
-@synthesize serialFileDescriptor;
+@synthesize serialFileDescriptor = _serialFileDescriptor;
 @synthesize gOriginalTTYAttrs;
 @synthesize incomingStack = _incomingStack;
 
@@ -21,6 +21,7 @@
 //    return result;
 //}
 
+
 - (SDIncomingStack *)incomingStack
 {
     if(!_incomingStack)
@@ -30,25 +31,18 @@
     return _incomingStack;
 }
 
-- (NSString *) selectSerialPort: (NSString *)serialPortFile baud: (speed_t)baudRate
+- (int)serialFileDescriptor
 {
-    NSString *error = [self openSerialPort: serialPortFile baud:baudRate];
-	
-	if(error!=nil)
+    if(!_serialFileDescriptor)
     {
-        NSLog(@"%@", error);
-        return error;
-	}
-    else
-    {
-		[self incomingTextUpdateThread];
-        return nil;
-	}
+        _serialFileDescriptor = 0;
+    }
+    return _serialFileDescriptor;
 }
 
-- (void)autoSelectSerialPortWithBaud: (speed_t)baudRate
+- (void)autoTrySerialPortWithBaudRate: (speed_t)baudRate
 {
-    NSArray *serialPortArray = [self availiableSerialPorts];
+    NSArray *serialPortArray = [self availableSerialPorts];
     for (NSString *port in serialPortArray)
     {
         NSLog(@"trying to connect to serial port: %@...", port);
@@ -59,7 +53,8 @@
         
         else
         {
-            NSString *errorMessage = [self selectSerialPort:port baud:baudRate];
+            NSString *errorMessage = [self trySerialPort:port withBaudRate:baudRate];
+
             if (errorMessage!=nil)
             {
                 NSLog(@"serial port connection failed, error: %@", errorMessage);
@@ -82,7 +77,102 @@
     }
 }
 
-- (void)incomingTextUpdateThread//: (NSThread *) parentThread
+
+- (NSArray *)getNextIncomingLine
+{
+    const int BUFFER_SIZE = 100;
+	char byte_buffer[BUFFER_SIZE]; // buffer for holding incoming data
+	long numBytes = 0; // number of bytes read during read
+    NSString *incomingText; // incoming text from the serial port
+    char endlinechar = '\n';
+    NSString *endline = [[NSString alloc] initWithFormat:@"%c", endlinechar];
+    
+    NSString *currentLine = [[NSString alloc]init];
+    
+    BOOL firstEndLineFound = NO;
+    BOOL lineDone = NO;
+    
+    while (!lineDone)
+    {
+        numBytes = read(self.serialFileDescriptor, byte_buffer, BUFFER_SIZE);
+        
+        if(numBytes > 0)
+        {
+            incomingText = [[NSString alloc]initWithBytes:byte_buffer length:numBytes encoding:NSASCIIStringEncoding];
+            
+            long endlineloc = [incomingText rangeOfString:endline].location;
+            
+            if (endlineloc != NSNotFound) //if it contains the endline...
+            {
+                if (firstEndLineFound)
+                {
+                    NSString *stringBeforeEndLine = [incomingText substringToIndex:(endlineloc)];
+                    currentLine = [currentLine stringByAppendingString:stringBeforeEndLine];
+                    lineDone = YES;
+                }
+                else
+                {
+                    NSString *stringAfterEndLine = [incomingText substringFromIndex:(endlineloc+[endline length])];
+                    currentLine = [currentLine stringByAppendingString:stringAfterEndLine];
+                    firstEndLineFound = YES;
+                }
+            }
+            else //if it doesn't contain the endline...
+            {
+                if (firstEndLineFound)
+                {
+                    currentLine = [currentLine stringByAppendingString:incomingText];
+                }
+                else
+                {}
+            }
+        }
+    }
+    
+    NSArray *seperatedComponents = [currentLine componentsSeparatedByString:@" "];
+    
+    return seperatedComponents;
+}
+
+- (SDActionDefinition *)actionDefinitionFromNext:(NSUInteger *)lines
+                                  linesForString:(NSString *)incomingString
+{
+	SDIncomingStack *gestureValueStack = [[SDIncomingStack alloc]init];
+	for(int i = 0; i < lines; i++)
+	{
+		[gestureValueStack push:[self getNextIncomingLine]];
+	}
+	SDActionDefinition *result = [[SDActionDefinition alloc] initWithGestureVector:[gestureValueStack pop] forString:incomingString];
+	for(int i = 0; i < lines-1; i++)
+	{
+		[result modifyBoundsWithGestureVector:[gestureValueStack pop]];
+	}
+
+	return result;
+}
+
+
+- (SDSerialCommunicator *)initWithSerialPort:(NSString *)serialPortFile
+                                withBaudRate:(speed_t)baudRate
+{
+	if(self = [super init])
+	{
+		[self trySerialPort:serialPortFile withBaudRate:baudRate];
+	}
+
+	return self;
+}
+
+- (SDSerialCommunicator *)initAndAutoTryPortsWithBaudRate:(speed_t)baudRate
+{
+	if (self = [super init])
+	{
+		[self autoTrySerialPortWithBaudRate:baudRate];
+	}
+	return self;
+}
+
+- (void)keepGettingIncomingLines//: (NSThread *) parentThread
 {
     const int BUFFER_SIZE = 100;
 	char byte_buffer[BUFFER_SIZE]; // buffer for holding incoming data
@@ -100,26 +190,26 @@
     {
         
 		// read() blocks until some data is available or the port is closed
-		numBytes = read(serialFileDescriptor, byte_buffer, BUFFER_SIZE); // read up to the size of the buffer
+		numBytes = read(self.serialFileDescriptor, byte_buffer, BUFFER_SIZE); // read up to the size of the buffer
         
         
         
 		if(numBytes>0)
         {
             
-//			// create an NSString from the incoming bytes (the bytes aren't null terminated)
-//			text = [NSString stringWithCString:byte_buffer encoding:NSASCIIStringEncoding];
+            //			// create an NSString from the incoming bytes (the bytes aren't null terminated)
+            //			text = [NSString stringWithCString:byte_buffer encoding:NSASCIIStringEncoding];
             
             text = [[NSString alloc]initWithBytes:byte_buffer length:numBytes encoding:NSASCIIStringEncoding];
-//            NSLog(@"%@", text);
+            //            NSLog(@"%@", text);
             
             
-//            NSLog(@"%ld: %@", numBytes, text);
-//            if ([text characterAtIndex:([text length]-1)] == endlinechar || )
-//            {
-//                <#statements#>
-//            }
-//            NSMutableArray *arrayOfLine = [[NSMutableArray alloc]initWithArray:[text componentsSeparatedByString:endline copyItems:YES]];
+            //            NSLog(@"%ld: %@", numBytes, text);
+            //            if ([text characterAtIndex:([text length]-1)] == endlinechar || )
+            //            {
+            //                <#statements#>
+            //            }
+            //            NSMutableArray *arrayOfLine = [[NSMutableArray alloc]initWithArray:[text componentsSeparatedByString:endline copyItems:YES]];
             //            NSLog(@"%@", text);
 			// this text can't be directly sent to the text area from this thread
 			//  BUT, we can call a selctor on the main thread.
@@ -134,7 +224,7 @@
         if (endlineloc != NSNotFound) //if it contains the endline...
         {
             currentLine = [currentLine stringByAppendingString:[text substringToIndex:endlineloc]];
-//            NSLog(@"%@", currentLine);
+            //            NSLog(@"%@", currentLine);
             [self.incomingStack push:[currentLine substringToIndex:currentLine.length]];
             currentLine = [[NSString alloc]init];
             currentLine = [currentLine stringByAppendingString:[text substringFromIndex:endlineloc+[endline length]]];
@@ -146,7 +236,7 @@
     }
 }
 
-- (NSArray *)availiableSerialPorts
+- (NSArray *)availableSerialPorts
 {
     NSMutableArray *result = [[NSMutableArray alloc]init];
     
@@ -176,13 +266,16 @@
 }
 
 
-- (NSString *) openSerialPort: (NSString *)serialPortFile baud: (speed_t)baudRate {
+- (NSString *)trySerialPort:(NSString *)serialPortFile
+               withBaudRate: (speed_t)baudRate
+{
 	int success;
 	
 	// close the port if it is already open
-	if (serialFileDescriptor != -1) {
-		close(serialFileDescriptor);
-		serialFileDescriptor = -1;
+	if (self.serialFileDescriptor != -1)
+    {
+		close(self.serialFileDescriptor);
+		self.serialFileDescriptor = -1;
 		
 		// wait for the reading thread to die
 		
@@ -204,24 +297,24 @@
 	
 	// open the port
 	//     O_NONBLOCK causes the port to open without any delay (we'll block with another call)
-	serialFileDescriptor = open(bsdPath, O_RDWR | O_NOCTTY | O_NONBLOCK );
+	self.serialFileDescriptor = open(bsdPath, O_RDWR | O_NOCTTY | O_NONBLOCK );
 	
-	if (serialFileDescriptor == -1) {
+	if (self.serialFileDescriptor == -1) {
 		// check if the port opened correctly
 		errorMessage = [[NSMutableString alloc] initWithFormat:@"Error: couldn't open serial port"];
 	} else {
 		// TIOCEXCL causes blocking of non-root processes on this serial-port
-		success = ioctl(serialFileDescriptor, TIOCEXCL);
+		success = ioctl(self.serialFileDescriptor, TIOCEXCL);
 		if ( success == -1) {
 			errorMessage = [[NSMutableString alloc] initWithFormat:@"Error: couldn't obtain lock on serial port"];
 		} else {
-			success = fcntl(serialFileDescriptor, F_SETFL, 0);
+			success = fcntl(self.serialFileDescriptor, F_SETFL, 0);
 			if ( success == -1) {
 				// clear the O_NONBLOCK flag; all calls from here on out are blocking for non-root processes
 				errorMessage = [[NSMutableString alloc] initWithFormat:@"Error: couldn't obtain lock on serial port"];
 			} else {
 				// Get the current options and save them so we can restore the default settings later.
-				success = tcgetattr(serialFileDescriptor, &gOriginalTTYAttrs);
+				success = tcgetattr(self.serialFileDescriptor, &gOriginalTTYAttrs);
 				if ( success == -1) {
 					errorMessage = [[NSMutableString alloc] initWithFormat:@"Error: couldn't get serial attributes"];
 				} else {
@@ -240,17 +333,17 @@
 					cfmakeraw(&options);
 					
 					// set tty attributes (raw-mode in this case)
-					success = tcsetattr(serialFileDescriptor, TCSANOW, &options);
+					success = tcsetattr(self.serialFileDescriptor, TCSANOW, &options);
 					if ( success == -1) {
 						errorMessage = [[NSMutableString alloc] initWithFormat:@"Error: coudln't set serial attributes"];
 					} else {
 						// Set baud rate (any arbitrary baud rate can be set this way)
-						success = ioctl(serialFileDescriptor, IOSSIOSPEED, &baudRate);
+						success = ioctl(self.serialFileDescriptor, IOSSIOSPEED, &baudRate);
 						if ( success == -1) {
 							errorMessage = [[NSMutableString alloc] initWithFormat:@"Error: Baud Rate out of bounds"];
 						} else {
 							// Set the receive latency (a.k.a. don't wait to buffer data)
-							success = ioctl(serialFileDescriptor, IOSSDATALAT, &mics);
+							success = ioctl(self.serialFileDescriptor, IOSSDATALAT, &mics);
 							if ( success == -1) {
 								errorMessage = [[NSMutableString alloc] initWithFormat:@"Error: coudln't set serial latency"];
 							}
@@ -262,11 +355,11 @@
 	}
 	
 	// make sure the port is closed if a problem happens
-	if ((serialFileDescriptor != -1) && (errorMessage != nil)) {
-		close(serialFileDescriptor);
-		serialFileDescriptor = -1;
-	}
-	
+//	if ((self.arduinoSerialFileDescriptor != -1) && (errorMessage != nil)) {
+		close(self.serialFileDescriptor);
+		self.serialFileDescriptor = -1;
+//	}
+    
 	return errorMessage;
 }
 

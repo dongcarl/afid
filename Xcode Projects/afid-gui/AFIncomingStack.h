@@ -1,25 +1,26 @@
 //
-//  SDIncomingStack.h
-//  squid-cli
+//  AFIncomingStack.h
+//  afid-gui
 //
-//  Created by Carl Dong on 6/25/13.
+//  Created by Carl Dong on 6/28/13.
 //  Copyright (c) 2013 catswearingbreadhats. All rights reserved.
 //
 
+#import "AFRecognizer.h"
 #import <Foundation/Foundation.h>
-#import "SDRecognizer.h"
 
-@interface SDIncomingStack : NSObject
+@interface AFIncomingStack : NSObject
 
 @property NSMutableArray *gestureStack;
 @property NSArray *pendingGesture;
-@property (nonatomic) SDRecognizer *recognizer;
+@property (nonatomic) AFRecognizer *recognizer;
 
 - (void)pushToPending: (NSArray *)incomingGestureVector;
 - (void)push: (NSArray *)incomingGestureVector;
 
+- (NSArray *)popFromPending;
 - (NSArray *)pop;
-- (void)clearAll;
 
+- (void)clearAll;
 
 @end

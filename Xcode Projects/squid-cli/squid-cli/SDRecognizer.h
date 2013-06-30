@@ -11,11 +11,25 @@
 
 @interface SDRecognizer : NSObject
 
-@property (nonatomic) NSMutableArray *definitions;
+@property (nonatomic) NSMutableArray *definitionStack;
+
+//initializers...
+- (SDRecognizer *)initWithActionDefinitions:(SDActionDefinition *)definition1, ... NS_REQUIRES_NIL_TERMINATION;
+//- (SDRecognizer *)initWithGestureVector:(NSArray *)gestureVector1, ... NS_REQUIRES_NIL_TERMINATION
+//                forStrings:(NSString *)string1, ... NS_REQUIRES_NIL_TERMINATION;
+
+//adding single action definitions
+- (void)addGestureVector:(NSArray *)GestureVector
+                     for:(NSString *)character;
+- (void)addActionDefinition:(SDActionDefinition *)actionDefinition;
+
+//adding multiple action definitions
+- (void)addActionDefinitions:(SDActionDefinition *)definition1, ... NS_REQUIRES_NIL_TERMINATION;
 
 
-- (void)addActionDefinition:(NSArray *)newDefinition
-                        for:(NSString *)character;
+
+
+
 - (NSString *)isAction:(NSArray *)input;
 
 

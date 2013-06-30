@@ -10,35 +10,46 @@
 
 @implementation SDRecognizer
 
-@synthesize definitions = _definitions;
+@synthesize definitionStack = _definitionStack;
 
-- (NSMutableArray *)definitions
+- (NSMutableArray *)definitionStack
 {
-    if (!_definitions)
+    if (!_definitionStack)
     {
-        _definitions = [[NSMutableArray alloc]init];
+        _definitionStack = [[NSMutableArray alloc]init];
     }
-    return _definitions;
+    return _definitionStack;
 }
 
-- (void)addActionDefinition:(NSArray *)newDefinition
+- (SDRecognizer *)initWithActionDefinitions:(SDActionDefinition *)definition1, ...
+{
+    if (self = [super init])
+    {
+	    va_list args;
+	    va_start(args, definition1);
+	    [self addActionDefinitions:CFBridgingRelease(args), nil];
+    }
+    return self;
+}
+
+- (void)addGestureVector:(NSArray *)newDefinition
                         for:(NSString *)character
 {
     
     NSString *newCharacter = [[NSString alloc] initWithString:character];
-    NSNumber *bufferValue = [[NSNumber alloc]initWithInt:40];
+    NSNumber *bufferValue = [[NSNumber alloc]initWithInt:10];
     
     NSArray *newUpperBound = [self changeEachNSNumberInArray:newDefinition by:bufferValue deltaIsPositive:YES];
     NSArray *newLowerBound = [self changeEachNSNumberInArray:newDefinition by:bufferValue deltaIsPositive:NO];
     
-    for (SDActionDefinition *actionDefinition in [self definitions])
+    for (SDActionDefinition *actionDefinition in [self definitionStack])
     {
-                      
+        
         if ([actionDefinition.correspondingCharacter isEqualTo:newCharacter])
         {
             for (int i = 0; i < [newDefinition count]; i++)
             {
-
+                
                 //Comparing upper bounds...
                 NSNumber *existingUpperBoundAtI = [[actionDefinition upperBound] objectAtIndex:i];
                 NSNumber *newUpperBoundAtI = [newUpperBound objectAtIndex:i];
@@ -80,22 +91,45 @@
             }
             break;
             return;
-        }      
+        }
         
     }
     
-    [self.definitions addObject:[[SDActionDefinition alloc] initWithCorrespondingCharacter:newCharacter upperBound:newUpperBound lowerBound:newLowerBound]];
+    [self.definitionStack addObject:[[SDActionDefinition alloc] initWithUpperBound:newUpperBound andLowerBound:newLowerBound forCorrespondingString:newCharacter]];
     //NSLog(@"added definition for %@ with upperBound %@ and lower bound %@", newCharacter, newUpperBound, newLowerBound);
-    
 }
+
+- (void)addActionDefinition:(SDActionDefinition *)actionDefinition
+{
+	[self.definitionStack addObject:actionDefinition];
+}
+
+- (void)addActionDefinitions:(SDActionDefinition *)definition1, ...
+{
+
+	va_list args;
+	va_start(args, definition1);
+	for (SDActionDefinition *arg = definition1; arg != nil; arg = va_arg(args, SDActionDefinition*))
+	{
+		[self addActionDefinition:arg];
+	}
+	va_end(args);
+}
+
 
 - (NSString *)isAction:(NSArray *)input
 {
     //NSLog(@"operating isAction with upper %@ and lower %@", [self.definitions.lastObject upperBound], [self.definitions.lastObject lowerBound]);
-    
     NSString *result = [[NSString alloc]init];
+
+    if ([input count]!=[[self.definitionStack.lastObject upperBound] count])
+    {
+        NSLog(@"input has more dimensions than definition");
+        return result;
+    }
     
-    for (SDActionDefinition *actionDefinition in [self definitions])
+    
+    for (SDActionDefinition *actionDefinition in [self definitionStack])
     {
         
         BOOL outsideAnyBounds = NO;
@@ -139,9 +173,5 @@
     
     return result;
 }
-
-
-
-
 
 @end

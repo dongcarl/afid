@@ -20,16 +20,27 @@
 
 @interface SDSerialCommunicator : NSObject
 
-- (void)incomingTextUpdateThread;//: (NSThread *) parentThread;
-- (NSArray *)availiableSerialPorts;
+//initializers
+- (SDSerialCommunicator *)initWithSerialPort:(NSString *)serialPortFile
+								withBaudRate:(speed_t)baudRate;
+- (SDSerialCommunicator *)initAndAutoTryPortsWithBaudRate:(speed_t)baudRate;
+
+
+- (void)keepGettingIncomingLines;//: (NSThread *) parentThread;
+- (NSArray *)availableSerialPorts;
 //- (void)openSerialPortAtBaudRate: (speed_t)baudRate;
-- (NSString *) openSerialPort: (NSString *)serialPortFile baud: (speed_t)baudRate;
-- (NSString *) selectSerialPort: (NSString *)serialPortFile baud: (speed_t)baudRate;
-- (void)autoSelectSerialPortWithBaud: (speed_t)baudRate;
+- (NSString *)trySerialPort:(NSString *)serialPortFile
+               withBaudRate: (speed_t)baudRate;
+
+- (void)autoTrySerialPortWithBaudRate: (speed_t)baudRate;
+- (NSArray *)getNextIncomingLine;
+
+- (SDActionDefinition *)actionDefinitionFromNext:(NSUInteger *)incomingNumberOfLines
+                                  linesForString:(NSString *)incomingString;
 
 
 @property struct termios gOriginalTTYAttrs;
-@property int serialFileDescriptor;
+@property (nonatomic) int serialFileDescriptor;
 @property (nonatomic) SDIncomingStack *incomingStack;
 
 @end
