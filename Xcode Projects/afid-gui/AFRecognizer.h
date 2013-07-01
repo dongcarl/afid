@@ -28,5 +28,8 @@
                forString:(NSString *)incomingString;
 
 - (NSString *)isAction:(NSArray *)input;
+- (NSArray *)changeEachNSNumberInArray:(NSArray *)input
+                                    by:(NSNumber *)delta
+                       deltaIsPositive:(BOOL)deltaIsPositive;
 
 @end

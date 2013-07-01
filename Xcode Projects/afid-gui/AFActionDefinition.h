@@ -10,8 +10,8 @@
 
 @interface AFActionDefinition : NSObject
 
-@property (nonatomic) NSArray *upperBound;
-@property (nonatomic) NSArray *lowerBound;
+@property (nonatomic) NSMutableArray *upperBound;
+@property (nonatomic) NSMutableArray *lowerBound;
 
 @property (nonatomic) NSString *correspondingCharacter;
 
@@ -30,6 +30,6 @@
                             andBuffer:(int)incomingBufferValue;
 - (void)modifyBoundsWithActionDefinition:(AFActionDefinition *)incomingActionDefinition;
 - (void)modifyBoundsWithUpperBound:(NSArray *)incomingUpperBound
-					 andLowerBound:(NSArray *)incomingLowerBound;
+                     andLowerBound:(NSArray *)incomingLowerBound;
 
 @end

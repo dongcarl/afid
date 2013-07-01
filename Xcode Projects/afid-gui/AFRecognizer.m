@@ -96,6 +96,7 @@
 
 	if (existingActionDefinitionStackContainsIncomingActionDefinition)
 	{
+		NSLog(@"going to modify %@ with %@", duplicateDefinitionInExistingActionDefinitionStack, incomingActionDefinition);
 		[duplicateDefinitionInExistingActionDefinitionStack modifyBoundsWithActionDefinition:incomingActionDefinition];
 	}
 	else

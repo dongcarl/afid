@@ -17,29 +17,29 @@
 
 - (NSArray *)upperBound
 {
-    if(!_upperBound)
-    {
-        _upperBound = [[NSArray alloc]init];
-    }
-    return _upperBound;
+	if(!_upperBound)
+	{
+		_upperBound = [[NSMutableArray alloc]init];
+	}
+	return _upperBound;
 }
 
 - (NSArray *)lowerBound
 {
-    if(!_lowerBound)
-    {
-        _lowerBound = [[NSArray alloc]init];
-    }
-    return _lowerBound;
+	if(!_lowerBound)
+	{
+		_lowerBound = [[NSMutableArray alloc]init];
+	}
+	return _lowerBound;
 }
 
 - (NSString *)correspondingCharacter
 {
-    if(!_correspondingCharacter)
-    {
-        _correspondingCharacter = [[NSString alloc]init];
-    }
-    return _correspondingCharacter;
+	if(!_correspondingCharacter)
+	{
+		_correspondingCharacter = [[NSString alloc]init];
+	}
+	return _correspondingCharacter;
 }
 
 - (AFActionDefinition *)initWithUpperBound:(NSArray *)incomingUpperBound
@@ -49,8 +49,8 @@
 	if (self = [super init])
 	{
 		self.correspondingCharacter = incomingString;
-		self.upperBound = incomingUpperBound;
-		self.lowerBound = incomingLowerBound;
+		self.upperBound = [incomingUpperBound mutableCopy];
+		self.lowerBound = [incomingLowerBound mutableCopy];
 	}
 	return self;
 }
@@ -78,6 +78,34 @@
 	return [self initWithUpperBound:incomingUpperBound andLowerBound:incomingLowerBound forCorrespondingString:incomingString];
 }
 
+- (NSString *)description
+{
+	NSMutableString *upperBound = [[NSMutableString alloc]init];
+	for (id i in self.upperBound)
+	{
+		[upperBound appendFormat:@"%@", i];
+		if (![i isEqualTo:self.upperBound.lastObject])
+		{
+			[upperBound appendFormat:@" "];
+		}
+	}
+
+	NSMutableString *lowerBound = [[NSMutableString alloc]init];
+	for (NSObject *i in self.lowerBound)
+	{
+		[lowerBound appendFormat:@"%@", i];
+		if (![i isEqualTo:self.lowerBound.lastObject])
+		{
+			[lowerBound appendFormat:@" "];
+		}
+	}
+
+	return [[NSString alloc] initWithFormat:@"\nlogging an AFActionDefinition with \n"
+			                                        "upperBound: %@\n"
+			                                        "lowerBound: %@\n"
+			                                        "correspondingCharacter %@", upperBound, lowerBound, self.correspondingCharacter];
+}
+
 - (void)modifyBoundsWithUpperBound:(NSArray *)incomingUpperBound
                      andLowerBound:(NSArray *)incomingLowerBound
 {
@@ -90,11 +118,11 @@
 
 		if(currentIncomingUpperBound > currentExistingUpperBound)
 		{
-			currentExistingUpperBound = currentIncomingUpperBound;
+			[self.upperBound replaceObjectAtIndex:i withObject:currentIncomingUpperBound];
 		}
 		if(currentIncomingLowerBound < currentExistingLowerBound)
 		{
-			currentExistingLowerBound = currentIncomingLowerBound;
+			[self.lowerBound replaceObjectAtIndex:i withObject:currentIncomingLowerBound];
 		}
 	}
 }
@@ -123,7 +151,7 @@
                        deltaIsPositive:(BOOL)deltaIsPositive
 {
 	NSMutableArray *result = [[NSMutableArray alloc]init];
-    
+
 	for (NSNumber *currentNumber in input)
 	{
 		if (deltaIsPositive)
