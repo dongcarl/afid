@@ -42,7 +42,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    //
+    
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "catswearingbreadhats.afid_gui" in the user's Application Support directory.
