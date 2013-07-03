@@ -42,7 +42,11 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    
+//    while (YES)
+//    {
+//        NSArray *nextLine = [self.serialCommunicator nextGestureVector];
+//        NSLog(@"recognized: %@ as %@", nextLine, [self.recognizer isAction:nextLine]);
+//    }
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "catswearingbreadhats.afid_gui" in the user's Application Support directory.
@@ -162,11 +166,33 @@
 
 - (IBAction)submitButtonPressed:(NSButton *)sender
 {
-	[self.recognizer addSingleActionDefinition:[self.serialCommunicator actionDefinitionFromNext:[self.inputNumberTextField intValue] linesForString:[self.actionString stringValue] withBufferSize:10]];
-	for (AFActionDefinition *actionDefinition in self.recognizer.actionDefinitionStack)
+//	[self.recognizer addSingleActionDefinition:[self.serialCommunicator actionDefinitionFromNext:[self.inputNumberTextField intValue] linesForString:[self.actionString stringValue] withBufferSize:10]];
+//	for (AFActionDefinition *actionDefinition in self.recognizer.actionDefinitionStack)
+//	{
+//		NSLog(@"%@", actionDefinition);
+//	}
+	NSString *filePath = [[[NSString alloc] initWithFormat:@"~/data/%@.txt", self.actionString.stringValue] stringByExpandingTildeInPath];
+	NSMutableString *stringToOutput = [[NSMutableString alloc]init];
+	for (int i = 0; i < self.inputNumberTextField.intValue; i++)
 	{
-		NSLog(@"%@", actionDefinition);
+		[stringToOutput appendFormat:@"%@,",self.actionString.stringValue];
+		NSArray *gesture = [self.serialCommunicator nextGestureVector];
+		for(NSNumber *currentNumber in gesture)
+		{
+			[stringToOutput appendFormat:@"%d", currentNumber.intValue];
+			if ([currentNumber isEqualTo:gesture.lastObject])
+			{
+				char endlinechar = '\n';
+				[stringToOutput appendFormat:@"%c", endlinechar];
+			}
+			else
+			{
+				[stringToOutput appendFormat:@","];
+			}
+		}
 	}
+	NSError *error = [[NSError alloc]init];
+	[stringToOutput writeToFile:filePath atomically:YES encoding:NSASCIIStringEncoding error:&error];
 }
 
 - (IBAction)startRecognitionPressed:(id)sender
