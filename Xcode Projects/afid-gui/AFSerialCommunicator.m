@@ -404,9 +404,49 @@
 			                                                                                forString:incomingString];
 	for (int i = 1; i < lines; i++)
 	{
-		[resultingActionDefinition modifyBoundsWithGestureVector:[incomingArrayOfGestureVectors objectAtIndex:i] andBuffer:incomingBufferSize];
+		[resultingActionDefinition modifyBoundsWithGestureVector:[incomingArrayOfGestureVectors objectAtIndex:i]];
 	}
 	return resultingActionDefinition;
 }
+
+- (NSError *)writeToFile:(NSString *)incomingOutputFilePath
+              atomically:(BOOL)incomingAtomicWriteDecision
+		fromNextGestures:(NSUInteger)incomingNumGestureVectors
+ withCorrespondingString:(NSString *)incomingCorrespondingString
+{
+	NSArray *arrayOfGestureVectors = [self nextGestureVectors:(int)incomingNumGestureVectors];
+	NSMutableString *resultingFile = [[NSMutableString alloc]init];
+
+	NSString *lineSeperator = [[NSString alloc] initWithFormat:@"%c", '\n'];
+	NSString *elementsSeperator = [[NSString alloc] initWithFormat:@","];
+
+	for (NSArray *currentGestureVector in arrayOfGestureVectors)
+	{
+		[resultingFile appendString:incomingCorrespondingString];
+		[resultingFile appendString:elementsSeperator];
+
+		for (NSString *currentGestureDimension in currentGestureVector)
+		{
+			[resultingFile appendString:currentGestureDimension];
+
+			if (currentGestureDimension != currentGestureVector.lastObject)
+			{
+				[resultingFile appendString:elementsSeperator];
+			}
+			else
+			{
+				[resultingFile appendString:lineSeperator];
+			}
+		}
+	}
+
+	NSError *resultingErrorFromWrite;
+
+	[resultingFile writeToFile:incomingOutputFilePath atomically:incomingAtomicWriteDecision
+	                  encoding:NSASCIIStringEncoding error:&resultingErrorFromWrite];
+
+	return resultingErrorFromWrite;
+}
+
 
 @end

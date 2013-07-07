@@ -140,24 +140,24 @@ int main(int argc, const char * argv[])
         //        [comm.incomingStack.recognizer addSingleActionDefinition:[[NSArray alloc]initWithArray:dDefinitions copyItems:YES]  for:@"D"];
         //
         //        NSLog(@"working with definition for %@ with upper %@ and lower %@",
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:0] correspondingCharacter],
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:0] upperBound],
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:0] lowerBound]);
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:0] correspondingString],
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:0] upperBound],
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:0] lowerBound]);
         //
         //        NSLog(@"working with definition for %@ with upper %@ and lower %@",
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:1] correspondingCharacter],
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:1] upperBound],
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:1] lowerBound]);
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:1] correspondingString],
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:1] upperBound],
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:1] lowerBound]);
         //
         //        NSLog(@"working with definition for %@ with upper %@ and lower %@",
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:2] correspondingCharacter],
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:2] upperBound],
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:2] lowerBound]);
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:2] correspondingString],
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:2] upperBound],
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:2] lowerBound]);
         //
         //        NSLog(@"working with definition for %@ with upper %@ and lower %@",
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:3] correspondingCharacter],
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:3] upperBound],
-        //              [[comm.incomingStack.recognizer.actionDefinitionStack objectAtIndex:3] lowerBound]);
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:3] correspondingString],
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:3] upperBound],
+        //              [[comm.incomingStack.recognizer.mainActionDefinitionStack objectAtIndex:3] lowerBound]);
         //        
         //        NSString *gestureRecognized = [[NSString alloc] initWithString:[comm.incomingStack.recognizer isAction:comm.incomingStack.pendingGesture]];
         //

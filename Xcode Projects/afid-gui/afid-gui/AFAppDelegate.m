@@ -19,34 +19,33 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
 
-@synthesize serialCommunicator = _serialCommunicator;
-@synthesize recognizer = _recognizer;
+@synthesize mainSerialCommunicator = _mainSerialCommunicator;
+@synthesize mainActionDefinitionStack = _mainActionDefinitionStack;
 
--(AFSerialCommunicator *)serialCommunicator
+-(AFSerialCommunicator *)mainSerialCommunicator
 {
-	if(!_serialCommunicator)
+	if(!_mainSerialCommunicator)
 	{
-		_serialCommunicator = [[AFSerialCommunicator alloc] initAndAutoOpenSerialPortWithBaudRate:B9600];
+		_mainSerialCommunicator = [[AFSerialCommunicator alloc] initAndAutoOpenSerialPortWithBaudRate:2000000];
 	}
-	return _serialCommunicator;
+	return _mainSerialCommunicator;
 }
 
-- (AFRecognizer *)recognizer
+- (AFActionDefinitionStack *)mainActionDefinitionStack
 {
-	if(!_recognizer)
+	if(!_mainActionDefinitionStack)
 	{
-		_recognizer = [[AFRecognizer alloc]init];
+		_mainActionDefinitionStack = [[AFActionDefinitionStack alloc]init];
 	}
-	return _recognizer;
+	return _mainActionDefinitionStack;
 }
 
+
+
+//lookie here!
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-//    while (YES)
-//    {
-//        NSArray *nextLine = [self.serialCommunicator nextGestureVector];
-//        NSLog(@"recognized: %@ as %@", nextLine, [self.recognizer isAction:nextLine]);
-//    }
+    
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "catswearingbreadhats.afid_gui" in the user's Application Support directory.
@@ -63,7 +62,7 @@
 	if (_managedObjectModel) {
 		return _managedObjectModel;
 	}
-
+    
 	NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"afid_gui" withExtension:@"momd"];
 	_managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
 	return _managedObjectModel;
@@ -75,19 +74,19 @@
 	if (_persistentStoreCoordinator) {
 		return _persistentStoreCoordinator;
 	}
-
+    
 	NSManagedObjectModel *mom = [self managedObjectModel];
 	if (!mom) {
 		NSLog(@"%@:%@ No model to generate a store from", [self class], NSStringFromSelector(_cmd));
 		return nil;
 	}
-
+    
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	NSURL *applicationFilesDirectory = [self applicationFilesDirectory];
 	NSError *error = nil;
-
+    
 	NSDictionary *properties = [applicationFilesDirectory resourceValuesForKeys:@[NSURLIsDirectoryKey] error:&error];
-
+    
 	if (!properties) {
 		BOOL ok = NO;
 		if ([error code] == NSFileReadNoSuchFileError) {
@@ -101,16 +100,16 @@
 		if (![properties[NSURLIsDirectoryKey] boolValue]) {
 			// Customize and localize this error.
 			NSString *failureDescription = [NSString stringWithFormat:@"Expected a folder to store application data, found a file (%@).", [applicationFilesDirectory path]];
-
+            
 			NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 			[dict setValue:failureDescription forKey:NSLocalizedDescriptionKey];
 			error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:101 userInfo:dict];
-
+            
 			[[NSApplication sharedApplication] presentError:error];
 			return nil;
 		}
 	}
-
+    
 	NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"afid_gui.storedata"];
 	NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
 	if (![coordinator addPersistentStoreWithType:NSXMLStoreType configuration:nil URL:url options:nil error:&error]) {
@@ -118,17 +117,17 @@
 		return nil;
 	}
 	_persistentStoreCoordinator = coordinator;
-
+    
 	return _persistentStoreCoordinator;
 }
 
-// Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) 
+// Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
 - (NSManagedObjectContext *)managedObjectContext
 {
 	if (_managedObjectContext) {
 		return _managedObjectContext;
 	}
-
+    
 	NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
 	if (!coordinator) {
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -140,7 +139,7 @@
 	}
 	_managedObjectContext = [[NSManagedObjectContext alloc] init];
 	[_managedObjectContext setPersistentStoreCoordinator:coordinator];
-
+    
 	return _managedObjectContext;
 }
 
@@ -154,79 +153,42 @@
 - (IBAction)saveAction:(id)sender
 {
 	NSError *error = nil;
-
+    
 	if (![[self managedObjectContext] commitEditing]) {
 		NSLog(@"%@:%@ unable to commit editing before saving", [self class], NSStringFromSelector(_cmd));
 	}
-
+    
 	if (![[self managedObjectContext] save:&error]) {
 		[[NSApplication sharedApplication] presentError:error];
 	}
 }
 
-- (IBAction)submitButtonPressed:(NSButton *)sender
-{
-//	[self.recognizer addSingleActionDefinition:[self.serialCommunicator actionDefinitionFromNext:[self.inputNumberTextField intValue] linesForString:[self.actionString stringValue] withBufferSize:10]];
-//	for (AFActionDefinition *actionDefinition in self.recognizer.actionDefinitionStack)
-//	{
-//		NSLog(@"%@", actionDefinition);
-//	}
-	NSString *filePath = [[[NSString alloc] initWithFormat:@"~/data/%@.txt", self.actionString.stringValue] stringByExpandingTildeInPath];
-	NSMutableString *stringToOutput = [[NSMutableString alloc]init];
-	for (int i = 0; i < self.inputNumberTextField.intValue; i++)
-	{
-		[stringToOutput appendFormat:@"%@,",self.actionString.stringValue];
-		NSArray *gesture = [self.serialCommunicator nextGestureVector];
-		for(NSNumber *currentNumber in gesture)
-		{
-			[stringToOutput appendFormat:@"%d", currentNumber.intValue];
-			if ([currentNumber isEqualTo:gesture.lastObject])
-			{
-				char endlinechar = '\n';
-				[stringToOutput appendFormat:@"%c", endlinechar];
-			}
-			else
-			{
-				[stringToOutput appendFormat:@","];
-			}
-		}
-	}
-	NSError *error = [[NSError alloc]init];
-	[stringToOutput writeToFile:filePath atomically:YES encoding:NSASCIIStringEncoding error:&error];
-}
-
-- (IBAction)startRecognitionPressed:(id)sender
-{
-	NSString *recognized = [self.recognizer isAction:[self.serialCommunicator nextGestureVectorFromOpenedSerialPort]];
-	[self.currentlySeeingText setStringValue:recognized];
-}
-
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
 	// Save changes in the application's managed object context before the application terminates.
-
+    
 	if (!_managedObjectContext) {
 		return NSTerminateNow;
 	}
-
+    
 	if (![[self managedObjectContext] commitEditing]) {
 		NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
 		return NSTerminateCancel;
 	}
-
+    
 	if (![[self managedObjectContext] hasChanges]) {
 		return NSTerminateNow;
 	}
-
+    
 	NSError *error = nil;
 	if (![[self managedObjectContext] save:&error]) {
-
+        
 		// Customize this code block to include application-specific recovery steps.
 		BOOL result = [sender presentError:error];
 		if (result) {
 			return NSTerminateCancel;
 		}
-
+        
 		NSString *question = NSLocalizedString(@"Could not save changes while quitting. Quit anyway?", @"Quit without saves error question message");
 		NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
 		NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
@@ -236,15 +198,62 @@
 		[alert setInformativeText:info];
 		[alert addButtonWithTitle:quitButton];
 		[alert addButtonWithTitle:cancelButton];
-
+        
 		NSInteger answer = [alert runModal];
-
+        
 		if (answer == NSAlertAlternateReturn) {
 			return NSTerminateCancel;
 		}
 	}
-
+    
 	return NSTerminateNow;
 }
+
+
+//things that matter...
+- (IBAction)submitButtonPressed:(NSButton *)sender
+{
+	for (int i = 0; i < [self.incomingNumberOfGestureVectorsToRecognize intValue]; i++)
+	{
+		[self.mainActionDefinitionStack trainWithGestureVector:[self.mainSerialCommunicator nextGestureVector]
+		                                            bufferSize:[self.incomingBufferSize integerValue]
+				                           correspondingString:[self.incomingCorrespondingStringInput stringValue]];
+	}
+}
+
+- (IBAction)loadButtonPressed:(id)sender
+{
+    [self.mainActionDefinitionStack trainWithStandardConfigurationsForFile:[self.incomingTrainingPath stringValue]];
+}
+
+- (IBAction)exportButtonPressed:(id)sender
+{
+	[self.mainActionDefinitionStack exportCurrentActionDefinitionStackWithStandardConfigurationTo:[self.incomingExportPath stringValue]];
+
+}
+
+- (IBAction)startRecognitionPressed:(id)sender
+{
+	NSString *recognized = [self.mainActionDefinitionStack recognizeWithBoundingboxMethod:[self.mainSerialCommunicator nextGestureVectorFromOpenedSerialPort]];
+	[self.incomingCurrentlySeeingText setStringValue:recognized];
+}
+
+- (IBAction)recognizeFromBelowPressed:(id)sender
+{
+    NSArray *incomingGestureVector = [[NSArray alloc]initWithObjects:[[NSNumber alloc]initWithInteger:[self.input1 integerValue]],
+                                      [[NSNumber alloc]initWithInteger:[self.input2 integerValue]],
+                                      [[NSNumber alloc]initWithInteger:[self.input3 integerValue]],
+                                      [[NSNumber alloc]initWithInteger:[self.input4 integerValue]],
+                                      [[NSNumber alloc]initWithInteger:[self.input5 integerValue]],
+                                      [[NSNumber alloc]initWithInteger:[self.input6 integerValue]],
+                                      [[NSNumber alloc]initWithInteger:[self.input7 integerValue]],
+                                      [[NSNumber alloc]initWithInteger:[self.input8 integerValue]],
+                                      [[NSNumber alloc]initWithInteger:[self.input9 integerValue]],
+                                      [[NSNumber alloc]initWithInteger:[self.input10 integerValue]],nil];
+    NSString *recognizedGesture = [self.mainActionDefinitionStack recognizeWithBoundingboxMethod:incomingGestureVector];
+    [self.incomingCurrentlySeeingText setStringValue:recognizedGesture];
+}
+
+
 
 @end

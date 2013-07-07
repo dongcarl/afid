@@ -12,72 +12,142 @@
 
 @synthesize upperBound = _upperBound;
 @synthesize lowerBound = _lowerBound;
+@synthesize hasModifiedUpperBound = _hasModifiedUpperBound;
+@synthesize hasModifiedLowerBound = _hasModifiedLowerBound;
+@synthesize bufferSize = _bufferSize;
+@synthesize gestureVector = _gestureVector;
+@synthesize correspondingString = _correspondingString;
 
-@synthesize correspondingCharacter = _correspondingCharacter;
-
-- (NSArray *)upperBound
+- (NSMutableArray *)upperBound
 {
-	if(!_upperBound)
+	if (!_upperBound)
 	{
-		_upperBound = [[NSMutableArray alloc]init];
+		_upperBound = [[NSMutableArray alloc] initWithArray:[self changeEachNSNumberInArray:_gestureVector
+		                                                                   by:_bufferSize
+		                                                      deltaIsPositive:YES]];
 	}
 	return _upperBound;
 }
-
-- (NSArray *)lowerBound
+- (NSMutableArray *)lowerBound
 {
-	if(!_lowerBound)
+	if (!_lowerBound)
 	{
-		_lowerBound = [[NSMutableArray alloc]init];
+		_lowerBound = [[NSMutableArray alloc] initWithArray:[self changeEachNSNumberInArray:_gestureVector
+		                                                                          by:_bufferSize
+		                                                             deltaIsPositive:NO]];
 	}
 	return _lowerBound;
 }
-
-- (NSString *)correspondingCharacter
+- (BOOL)hasModifiedUpperBound
 {
-	if(!_correspondingCharacter)
+	if (!_hasModifiedUpperBound)
 	{
-		_correspondingCharacter = [[NSString alloc]init];
+		_hasModifiedUpperBound = NO;
 	}
-	return _correspondingCharacter;
+	return _hasModifiedUpperBound;
+}
+- (BOOL)hasModifiedLowerBound
+{
+	if (!_hasModifiedLowerBound)
+	{
+		_hasModifiedLowerBound = NO;
+	}
+	return _hasModifiedLowerBound;
+}
+- (NSMutableArray *)gestureVector
+{
+	if (!_gestureVector)
+	{
+			_gestureVector = [[NSMutableArray alloc]init];
+	}
+	return _gestureVector;
+}
+- (NSMutableString *)correspondingString
+{
+	if(!_correspondingString)
+	{
+		_correspondingString = [[NSMutableString alloc]init];
+	}
+	return _correspondingString;
+}
+- (NSUInteger)numberOfDimensions
+{
+	return self.gestureVector.count;
 }
 
-- (AFActionDefinition *)initWithUpperBound:(NSArray *)incomingUpperBound
-                             andLowerBound:(NSArray *)incomingLowerBound
-			        forCorrespondingString:(NSString *)incomingString
+//initializers
+- (AFActionDefinition *)initWithActionDefinition:(AFActionDefinition *)incomingActionDefinition
 {
 	if (self = [super init])
 	{
-		self.correspondingCharacter = incomingString;
-		self.upperBound = [incomingUpperBound mutableCopy];
-		self.lowerBound = [incomingLowerBound mutableCopy];
+		self = incomingActionDefinition;
+	}
+	return self;
+}
+- (AFActionDefinition *)initWithGestureVector:(NSArray *)incomingGestureVector
+                                    andBuffer:(NSUInteger)incomingBufferValue
+		                            forString:(NSString *)incomingString
+{
+	if (self = [super init])
+	{
+		self.gestureVector = [[NSMutableArray alloc] initWithArray:incomingGestureVector copyItems:YES];
+		self.bufferSize = incomingBufferValue;
+		self.correspondingString = [incomingString mutableCopy];
 	}
 	return self;
 }
 
-- (AFActionDefinition *)initWithActionDefinition:(AFActionDefinition *)incomingActionDefinition
+//modifiers
+- (void)modifyBoundsWithActionDefinition:(AFActionDefinition *)incomingActionDefinition
 {
 	NSArray *incomingUpperBound = incomingActionDefinition.upperBound;
 	NSArray *incomingLowerBound = incomingActionDefinition.lowerBound;
-	NSString *incomingString = incomingActionDefinition.correspondingCharacter;
 
-	return [self initWithUpperBound:incomingUpperBound andLowerBound:incomingLowerBound forCorrespondingString:incomingString];
+	for (int i = 0; i < self.numberOfDimensions; i++)
+	{
+		if ([[incomingUpperBound objectAtIndex:i] integerValue] > [[self.upperBound objectAtIndex:i] integerValue])
+		{
+			[self.upperBound replaceObjectAtIndex:i withObject:[incomingUpperBound objectAtIndex:i]];
+			self.hasModifiedUpperBound = YES;
+		}
+		if ([[incomingLowerBound objectAtIndex:i] integerValue] < [[self.lowerBound objectAtIndex:i] integerValue])
+		{
+			[self.lowerBound replaceObjectAtIndex:i withObject:[incomingLowerBound objectAtIndex:i]];
+			self.hasModifiedLowerBound = YES;
+		}
+	}
 }
-
-
-
-
-
-- (AFActionDefinition *)initWithGestureVector:(NSArray *)incomingGestureVector
-                                    andBuffer:(int)incomingBufferValue
-		                            forString:(NSString *)incomingString
+- (void)modifyBoundsWithGestureVector:(NSArray *)incomingGestureVector
 {
-	NSArray *incomingUpperBound = [self changeEachNSNumberInArray:[[NSArray alloc] initWithArray:incomingGestureVector copyItems:YES] by:incomingBufferValue deltaIsPositive:YES];
-	NSArray *incomingLowerBound = [self changeEachNSNumberInArray:[[NSArray alloc] initWithArray:incomingGestureVector copyItems:YES] by:incomingBufferValue deltaIsPositive:NO];
-
-	return [self initWithUpperBound:incomingUpperBound andLowerBound:incomingLowerBound forCorrespondingString:incomingString];
+	AFActionDefinition *incomingActionDefinition = [[AFActionDefinition alloc] initWithGestureVector:incomingGestureVector
+	                                                                                       andBuffer:self.bufferSize
+			                                                                               forString:self.correspondingString];
+	[self modifyBoundsWithActionDefinition:incomingActionDefinition];
 }
 
+//helper class
+- (NSArray *)changeEachNSNumberInArray:(NSArray *)input
+                                    by:(NSUInteger)delta
+                       deltaIsPositive:(BOOL)deltaIsPositive
+{
+	NSMutableArray *result = [[NSMutableArray alloc]init];
+
+	for (NSNumber *currentNumber in input)
+	{
+		if (deltaIsPositive)
+		{
+			[result addObject:[[NSNumber alloc]initWithInteger:([currentNumber intValue] + delta)]];
+		}
+		else
+		{
+			[result addObject:[[NSNumber alloc]initWithInteger:([currentNumber intValue] - delta)]];
+		}
+	}
+
+	return result;
+}
+
+//NSLog
 - (NSString *)description
 {
 	NSMutableString *upperBound = [[NSMutableString alloc]init];
@@ -103,68 +173,8 @@
 	return [[NSString alloc] initWithFormat:@"\nlogging an AFActionDefinition with \n"
 			                                        "upperBound: %@\n"
 			                                        "lowerBound: %@\n"
-			                                        "correspondingCharacter %@", upperBound, lowerBound, self.correspondingCharacter];
-}
-
-- (void)modifyBoundsWithUpperBound:(NSArray *)incomingUpperBound
-                     andLowerBound:(NSArray *)incomingLowerBound
-{
-	for(int i = 0; i < [self.upperBound count]; i++)
-	{
-		NSNumber *currentExistingUpperBound = [self.upperBound objectAtIndex:i];
-		NSNumber *currentExistingLowerBound = [self.lowerBound objectAtIndex:i];
-		NSNumber *currentIncomingUpperBound = [incomingUpperBound objectAtIndex:i];
-		NSNumber *currentIncomingLowerBound = [incomingLowerBound objectAtIndex:i];
-
-		if(currentIncomingUpperBound > currentExistingUpperBound)
-		{
-			[self.upperBound replaceObjectAtIndex:i withObject:currentIncomingUpperBound];
-		}
-		if(currentIncomingLowerBound < currentExistingLowerBound)
-		{
-			[self.lowerBound replaceObjectAtIndex:i withObject:currentIncomingLowerBound];
-		}
-	}
-}
-
-- (void)modifyBoundsWithActionDefinition:(AFActionDefinition *)incomingActionDefinition
-{
-	NSArray *incomingUpperBound = incomingActionDefinition.upperBound;
-	NSArray *incomingLowerBound = incomingActionDefinition.lowerBound;
-
-	[self modifyBoundsWithUpperBound:incomingUpperBound
-	                   andLowerBound:incomingLowerBound];
-}
-
-- (void)modifyBoundsWithGestureVector:(NSArray *)incomingGestureVector
-                            andBuffer:(int)incomingBufferValue
-{
-	NSArray *incomingUpperBound = [self changeEachNSNumberInArray:[[NSArray alloc] initWithArray:incomingGestureVector copyItems:YES] by:incomingBufferValue deltaIsPositive:YES];
-	NSArray *incomingLowerBound = [self changeEachNSNumberInArray:[[NSArray alloc] initWithArray:incomingGestureVector copyItems:YES] by:incomingBufferValue deltaIsPositive:NO];
-
-	[self modifyBoundsWithUpperBound:incomingUpperBound
-	                   andLowerBound:incomingLowerBound];
-}
-
-- (NSArray *)changeEachNSNumberInArray:(NSArray *)input
-                                    by:(int)delta
-                       deltaIsPositive:(BOOL)deltaIsPositive
-{
-	NSMutableArray *result = [[NSMutableArray alloc]init];
-
-	for (NSNumber *currentNumber in input)
-	{
-		if (deltaIsPositive)
-		{
-			[result addObject:[[NSNumber alloc]initWithInteger:([currentNumber intValue] + delta)]];
-		}
-		else
-		{
-			[result addObject:[[NSNumber alloc]initWithInteger:([currentNumber intValue] - delta)]];
-		}
-	}
-
-	return result;
+			                                        "correspondingString %@", upperBound, lowerBound,
+	                                        self.correspondingString];
 }
 
 @end

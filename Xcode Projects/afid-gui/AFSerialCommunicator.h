@@ -60,4 +60,11 @@
                                   linesForString:(NSString *)incomingString
 			                      withBufferSize:(int)incomingBufferSize;
 
+//outputting to file
+- (NSError *)writeToFile:(NSString *)incomingOutputFilePath
+              atomically:(BOOL)incomingAtomicWriteDecision
+		fromNextGestures:(NSUInteger)incomingNumGestureVectors
+ withCorrespondingString:(NSString *)incomingCorrespondingString;
+
+
 @end

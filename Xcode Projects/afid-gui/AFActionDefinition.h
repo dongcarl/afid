@@ -12,24 +12,20 @@
 
 @property (nonatomic) NSMutableArray *upperBound;
 @property (nonatomic) NSMutableArray *lowerBound;
+@property (nonatomic) BOOL hasModifiedUpperBound;
+@property (nonatomic) BOOL hasModifiedLowerBound;
+@property (nonatomic) NSMutableArray *gestureVector;
+@property (nonatomic) NSUInteger bufferSize;
+@property (nonatomic) NSMutableString *correspondingString;
 
-@property (nonatomic) NSString *correspondingCharacter;
-
-
-
+//initializers
 - (AFActionDefinition *)initWithGestureVector:(NSArray *)incomingGestureVector
-                                    andBuffer:(int)incomingBufferValue
+                                    andBuffer:(NSUInteger)incomingBufferValue
 		                            forString:(NSString *)incomingString;
 - (AFActionDefinition *)initWithActionDefinition:(AFActionDefinition *)incomingActionDefinition;
-- (AFActionDefinition *)initWithUpperBound:(NSArray *)incomingUpperBound
-                             andLowerBound:(NSArray *)incomingLowerBound
-			        forCorrespondingString:(NSString *)incomingString;
 
-
-- (void)modifyBoundsWithGestureVector:(NSArray *)incomingGestureVector
-                            andBuffer:(int)incomingBufferValue;
+//modifiers
+- (void)modifyBoundsWithGestureVector:(NSArray *)incomingGestureVector;
 - (void)modifyBoundsWithActionDefinition:(AFActionDefinition *)incomingActionDefinition;
-- (void)modifyBoundsWithUpperBound:(NSArray *)incomingUpperBound
-                     andLowerBound:(NSArray *)incomingLowerBound;
 
 @end
