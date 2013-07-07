@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 catswearingbreadhats. All rights reserved.
 //
 
+#import "AFActionDefinition.h"
 #import "AFIncomingStack.h"
 #import <Foundation/Foundation.h>
 
