@@ -383,7 +383,7 @@
 	return result;
 }
 
-- (NSArray *)nextGestureVectors:(int)numberOfGestureVectors
+- (NSArray *)nextGestureVectors:(NSUInteger)numberOfGestureVectors
 {
 	NSMutableArray *resultingArrayOfGestureVectors = [[NSMutableArray alloc]init];
 	for (int i = 0; i < numberOfGestureVectors; i++)

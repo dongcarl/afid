@@ -53,7 +53,7 @@
 //getting gesture vectors
 - (NSArray *)nextGestureVectorFromOpenedSerialPort;
 - (NSArray *)nextGestureVector;
-- (NSArray *)nextGestureVectors:(int)numberOfGestureVectors;
+- (NSArray *)nextGestureVectors:(NSUInteger)numberOfGestureVectors;
 
 //generating action definitions
 - (AFActionDefinition *)actionDefinitionFromNext:(int)lines

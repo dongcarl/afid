@@ -233,12 +233,34 @@
 //things that matter...
 - (IBAction)submitButtonPressed:(NSButton *)sender
 {
-	for (int i = 0; i < [self.incomingNumberOfGestureVectorsToRecognize intValue]; i++)
-	{
-		[self.mainActionDefinitionStack trainWithGestureVector:[self.mainSerialCommunicator nextGestureVector]
-		                                            bufferSize:[self.incomingBufferSize integerValue]
-				                           correspondingString:[self.incomingCorrespondingStringInput stringValue]];
-	}
+    NSMutableString *resultingString = [[NSMutableString alloc]init];
+    NSArray *incomingGestureVectors = [self.mainSerialCommunicator nextGestureVectors:[self.incomingNumberOfGestureVectorsToRecognize integerValue]];
+    
+    for (int i = 0; i < incomingGestureVectors.count; i++)
+    {
+        NSArray *currentGestureVector = [incomingGestureVectors objectAtIndex:i];
+        
+        [resultingString appendString:[self.incomingCorrespondingStringInput stringValue]];
+        [resultingString appendString:@","];
+        
+        for (int i = 0; i < currentGestureVector.count; i++)
+        {
+            [resultingString appendString:[[currentGestureVector objectAtIndex:i] stringValue]];
+            if (i == currentGestureVector.count-1)
+            {
+                [resultingString appendFormat:@"%c", '\n'];
+            }
+            else
+            {
+                [resultingString appendString:@","];
+            }
+        }
+    }
+    
+    NSError *error;
+    
+    [resultingString writeToFile:[self.incomingExportPath stringValue] atomically:YES encoding:NSASCIIStringEncoding error:&error];
+
 }
 
 - (IBAction)loadButtonPressed:(id)sender
