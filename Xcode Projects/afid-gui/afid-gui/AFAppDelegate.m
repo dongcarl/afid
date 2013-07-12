@@ -236,6 +236,8 @@
     NSMutableString *resultingString = [[NSMutableString alloc]init];
     NSArray *incomingGestureVectors = [self.mainSerialCommunicator nextGestureVectors:[self.incomingNumberOfGestureVectorsToRecognize integerValue]];
     
+    NSLog(@"%@", incomingGestureVectors);
+    
     for (int i = 0; i < incomingGestureVectors.count; i++)
     {
         NSArray *currentGestureVector = [incomingGestureVectors objectAtIndex:i];
@@ -245,7 +247,7 @@
         
         for (int i = 0; i < currentGestureVector.count; i++)
         {
-            [resultingString appendString:[[currentGestureVector objectAtIndex:i] stringValue]];
+            [resultingString appendString:[currentGestureVector objectAtIndex:i]];
             if (i == currentGestureVector.count-1)
             {
                 [resultingString appendFormat:@"%c", '\n'];
@@ -258,7 +260,6 @@
     }
     
     NSError *error;
-    
     [resultingString writeToFile:[self.incomingExportPath stringValue] atomically:YES encoding:NSASCIIStringEncoding error:&error];
 
 }
