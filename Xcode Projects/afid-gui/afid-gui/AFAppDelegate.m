@@ -279,6 +279,4 @@
     [self.incomingCurrentlySeeingText setStringValue:recognizedGesture];
 }
 
-
-
 @end
