@@ -6,8 +6,9 @@
 //  Copyright (c) 2013 catswearingbreadhats. All rights reserved.
 //
 
+
+
 #import "AFSerialCommunicator.h"
-#import "AFRecognizer.h"
 
 #import <Foundation/Foundation.h>
 
@@ -45,7 +46,26 @@
 //lookie here!
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    
+//    NSRange features = {.location = 0, .length = 10};
+//    NSRange labels = {.location = 10, .length = 1};
+//
+//    
+//    AFSupervisedLearner *learner = [[AFSupervisedLearner alloc]initWithTrainingFile:@"/Users/dongcarl/Downloads/mydata.arff"
+//                                                                        testingFile:@"/Users/dongcarl/Documents/Organized/Dropbox/School/US Schooling/Choate Rosemary Hall/Junior Year/Summer/AFID/All Datasets/1/completeswapped.arff"
+//                                                                 featureColumnRange:features
+//                                                                   labelColumnRange:labels];
+////    [learner autoTune];
+//    [learner train];
+//    NSLog (@"%@",[learner predictionFromGestureVector:[[NSArray alloc]initWithObjects:[[NSNumber alloc]initWithInteger:918], //1
+//                                          [[NSNumber alloc]initWithInteger:784],    //2
+//                                          [[NSNumber alloc]initWithInteger:723],    //3
+//                                          [[NSNumber alloc]initWithInteger:770],    //4
+//                                          [[NSNumber alloc]initWithInteger:796],    //5
+//                                          [[NSNumber alloc]initWithInteger:811],    //6
+//                                          [[NSNumber alloc]initWithInteger:884],    //7
+//                                          [[NSNumber alloc]initWithInteger:856],    //8
+//                                          [[NSNumber alloc]initWithInteger:909],    //9
+//                                          [[NSNumber alloc]initWithInteger:805],nil]]);    //10
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "catswearingbreadhats.afid_gui" in the user's Application Support directory.
@@ -223,18 +243,23 @@
 
 - (IBAction)loadButtonPressed:(id)sender
 {
-    [self.mainActionDefinitionStack trainWithStandardConfigurationsForFile:[self.incomingTrainingPath stringValue]];
+    NSRange features = {.location = 0, .length = 10};
+    NSRange labels = {.location = 10, .length = 1};
+//    [self.mainActionDefinitionStack trainWithStandardConfigurationsForFile:[self.incomingTrainingPath stringValue]];
+    self.mainLearner = [[AFSupervisedLearner alloc]initWithTrainingFile:self.incomingTrainingPath.stringValue testingFile:@"/Users/dongcarl/Documents/Organized/Dropbox/School/US Schooling/Choate Rosemary Hall/Junior Year/Summer/AFID/All Datasets/1/completeswapped.arff" featureColumnRange:features labelColumnRange:labels];
+    [self.mainLearner autoTune];
+    [self.mainLearner train];
 }
 
 - (IBAction)exportButtonPressed:(id)sender
 {
 	[self.mainActionDefinitionStack exportCurrentActionDefinitionStackWithStandardConfigurationTo:[self.incomingExportPath stringValue]];
-
 }
 
 - (IBAction)startRecognitionPressed:(id)sender
 {
-	NSString *recognized = [self.mainActionDefinitionStack recognizeWithBoundingboxMethod:[self.mainSerialCommunicator nextGestureVectorFromOpenedSerialPort]];
+//	NSString *recognized = [self.mainActionDefinitionStack recognizeWithBoundingboxMethod:[self.mainSerialCommunicator nextGestureVectorFromOpenedSerialPort]];
+    NSString *recognized = [self.mainLearner predictionFromGestureVector:[self.mainSerialCommunicator nextGestureVector]];
 	[self.incomingCurrentlySeeingText setStringValue:recognized];
 }
 

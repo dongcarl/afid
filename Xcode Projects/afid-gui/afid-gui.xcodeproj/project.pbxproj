@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		455830CC1F70D2E50CD59B2C /* AFHashRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 45583C389B25E891AC59C7A6 /* AFHashRecognizer.m */; };
+		4558323DC44DF48BE19F8B1D /* AFSupervisedLearner.mm in Sources */ = {isa = PBXBuildFile; fileRef = 45583BE98FE462B830123EEB /* AFSupervisedLearner.mm */; };
 		45583888C578BC23B92F0806 /* AFActionDefinitionStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 45583D27F73AD562E8B36841 /* AFActionDefinitionStack.m */; };
 		C91C71F3177E0B4A00A362F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C91C71F2177E0B4A00A362F7 /* Cocoa.framework */; };
 		C91C71FD177E0B4A00A362F7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C91C71FB177E0B4A00A362F7 /* InfoPlist.strings */; };
@@ -18,12 +19,13 @@
 		C91C720C177E0B4A00A362F7 /* afid_gui.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C91C720A177E0B4A00A362F7 /* afid_gui.xcdatamodeld */; };
 		C91C721B177E0C7400A362F7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C91C721A177E0C7400A362F7 /* IOKit.framework */; };
 		C91C722C177E0D7400A362F7 /* AFSerialCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C722B177E0D7400A362F7 /* AFSerialCommunicator.m */; };
-		C91C722F177E0DDF00A362F7 /* AFIncomingStack.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C722E177E0DDF00A362F7 /* AFIncomingStack.m */; };
 		C91C7232177E0DE800A362F7 /* AFActionDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C7231177E0DE800A362F7 /* AFActionDefinition.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		45583177966C39C4AB916401 /* AFSupervisedLearner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSupervisedLearner.h; sourceTree = "<group>"; };
 		455832E67D60051F8EDFCAE2 /* AFActionDefinitionStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFActionDefinitionStack.h; sourceTree = "<group>"; };
+		45583BE98FE462B830123EEB /* AFSupervisedLearner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AFSupervisedLearner.mm; sourceTree = "<group>"; };
 		45583C389B25E891AC59C7A6 /* AFHashRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHashRecognizer.m; sourceTree = "<group>"; };
 		45583D27F73AD562E8B36841 /* AFActionDefinitionStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFActionDefinitionStack.m; sourceTree = "<group>"; };
 		45583E1685EFDA0B79FD1B14 /* AFHashRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHashRecognizer.h; sourceTree = "<group>"; };
@@ -44,8 +46,6 @@
 		C91C721A177E0C7400A362F7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = ../../../../../../System/Library/Frameworks/IOKit.framework; sourceTree = "<group>"; };
 		C91C722A177E0D7400A362F7 /* AFSerialCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSerialCommunicator.h; sourceTree = "<group>"; };
 		C91C722B177E0D7400A362F7 /* AFSerialCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSerialCommunicator.m; sourceTree = "<group>"; };
-		C91C722D177E0DDF00A362F7 /* AFIncomingStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFIncomingStack.h; sourceTree = "<group>"; };
-		C91C722E177E0DDF00A362F7 /* AFIncomingStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFIncomingStack.m; sourceTree = "<group>"; };
 		C91C7230177E0DE800A362F7 /* AFActionDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFActionDefinition.h; sourceTree = "<group>"; };
 		C91C7231177E0DE800A362F7 /* AFActionDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFActionDefinition.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,13 +63,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C90D246B1789BE85000FC8C6 /* SupervisedLearners */ = {
+			isa = PBXGroup;
+			children = (
+				45583BE98FE462B830123EEB /* AFSupervisedLearner.mm */,
+				45583177966C39C4AB916401 /* AFSupervisedLearner.h */,
+			);
+			name = SupervisedLearners;
+			sourceTree = "<group>";
+		};
 		C91C71E6177E0B4A00A362F7 = {
 			isa = PBXGroup;
 			children = (
+				C9E9BAA0178A067A0040249C /* ObjectiveWaffles */,
 				C91C7230177E0DE800A362F7 /* AFActionDefinition.h */,
 				C91C7231177E0DE800A362F7 /* AFActionDefinition.m */,
-				C91C722D177E0DDF00A362F7 /* AFIncomingStack.h */,
-				C91C722E177E0DDF00A362F7 /* AFIncomingStack.m */,
 				C91C722A177E0D7400A362F7 /* AFSerialCommunicator.h */,
 				C91C722B177E0D7400A362F7 /* AFSerialCommunicator.m */,
 				C91C721A177E0C7400A362F7 /* IOKit.framework */,
@@ -132,6 +140,14 @@
 				C91C7201177E0B4A00A362F7 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C9E9BAA0178A067A0040249C /* ObjectiveWaffles */ = {
+			isa = PBXGroup;
+			children = (
+				C90D246B1789BE85000FC8C6 /* SupervisedLearners */,
+			);
+			name = ObjectiveWaffles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,10 +219,10 @@
 				C91C7206177E0B4A00A362F7 /* AFAppDelegate.m in Sources */,
 				C91C720C177E0B4A00A362F7 /* afid_gui.xcdatamodeld in Sources */,
 				C91C722C177E0D7400A362F7 /* AFSerialCommunicator.m in Sources */,
-				C91C722F177E0DDF00A362F7 /* AFIncomingStack.m in Sources */,
 				C91C7232177E0DE800A362F7 /* AFActionDefinition.m in Sources */,
 				455830CC1F70D2E50CD59B2C /* AFHashRecognizer.m in Sources */,
 				45583888C578BC23B92F0806 /* AFActionDefinitionStack.m in Sources */,
+				4558323DC44DF48BE19F8B1D /* AFSupervisedLearner.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,10 +318,15 @@
 		C91C7210177E0B4A00A362F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "afid-gui/afid-gui-Prefix.pch";
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = "afid-gui/afid-gui-Info.plist";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = "-lGClasses";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
@@ -315,10 +336,15 @@
 		C91C7211177E0B4A00A362F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "afid-gui/afid-gui-Prefix.pch";
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = "afid-gui/afid-gui-Info.plist";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = "-lGClasses";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
@@ -344,6 +370,7 @@
 				C91C7211177E0B4A00A362F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

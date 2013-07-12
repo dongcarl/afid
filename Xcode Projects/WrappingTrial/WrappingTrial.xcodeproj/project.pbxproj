@@ -1,0 +1,342 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C90D24AB1789EEC0000FC8C6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90D24AA1789EEC0000FC8C6 /* Cocoa.framework */; };
+		C90D24B51789EEC0000FC8C6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C90D24B31789EEC0000FC8C6 /* InfoPlist.strings */; };
+		C90D24B71789EEC0000FC8C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C90D24B61789EEC0000FC8C6 /* main.m */; };
+		C90D24BB1789EEC0000FC8C6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C90D24B91789EEC0000FC8C6 /* Credits.rtf */; };
+		C90D24BE1789EEC0000FC8C6 /* WTAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = C90D24BD1789EEC0000FC8C6 /* WTAppDelegate.mm */; };
+		C90D24C11789EEC0000FC8C6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C90D24BF1789EEC0000FC8C6 /* MainMenu.xib */; };
+		C90D24C41789EEC0000FC8C6 /* WrappingTrial.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C90D24C21789EEC0000FC8C6 /* WrappingTrial.xcdatamodeld */; };
+		C90D24CC1789F77A000FC8C6 /* WTGMatrix.mm in Sources */ = {isa = PBXBuildFile; fileRef = C90D24CB1789F77A000FC8C6 /* WTGMatrix.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C90D24A71789EEC0000FC8C6 /* WrappingTrial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WrappingTrial.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C90D24AA1789EEC0000FC8C6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		C90D24AD1789EEC0000FC8C6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		C90D24AE1789EEC0000FC8C6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C90D24AF1789EEC0000FC8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C90D24B21789EEC0000FC8C6 /* WrappingTrial-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WrappingTrial-Info.plist"; sourceTree = "<group>"; };
+		C90D24B41789EEC0000FC8C6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C90D24B61789EEC0000FC8C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C90D24B81789EEC0000FC8C6 /* WrappingTrial-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WrappingTrial-Prefix.pch"; sourceTree = "<group>"; };
+		C90D24BA1789EEC0000FC8C6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		C90D24BC1789EEC0000FC8C6 /* WTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTAppDelegate.h; sourceTree = "<group>"; };
+		C90D24BD1789EEC0000FC8C6 /* WTAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WTAppDelegate.mm; sourceTree = "<group>"; };
+		C90D24C01789EEC0000FC8C6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C90D24C31789EEC0000FC8C6 /* WrappingTrial.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WrappingTrial.xcdatamodel; sourceTree = "<group>"; };
+		C90D24CA1789F77A000FC8C6 /* WTGMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTGMatrix.h; sourceTree = "<group>"; };
+		C90D24CB1789F77A000FC8C6 /* WTGMatrix.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WTGMatrix.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C90D24A41789EEC0000FC8C6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C90D24AB1789EEC0000FC8C6 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C90D249E1789EEC0000FC8C6 = {
+			isa = PBXGroup;
+			children = (
+				C90D24B01789EEC0000FC8C6 /* WrappingTrial */,
+				C90D24A91789EEC0000FC8C6 /* Frameworks */,
+				C90D24A81789EEC0000FC8C6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C90D24A81789EEC0000FC8C6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C90D24A71789EEC0000FC8C6 /* WrappingTrial.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C90D24A91789EEC0000FC8C6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C90D24AA1789EEC0000FC8C6 /* Cocoa.framework */,
+				C90D24AC1789EEC0000FC8C6 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C90D24AC1789EEC0000FC8C6 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C90D24AD1789EEC0000FC8C6 /* AppKit.framework */,
+				C90D24AE1789EEC0000FC8C6 /* CoreData.framework */,
+				C90D24AF1789EEC0000FC8C6 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		C90D24B01789EEC0000FC8C6 /* WrappingTrial */ = {
+			isa = PBXGroup;
+			children = (
+				C90D24BC1789EEC0000FC8C6 /* WTAppDelegate.h */,
+				C90D24BD1789EEC0000FC8C6 /* WTAppDelegate.mm */,
+				C90D24BF1789EEC0000FC8C6 /* MainMenu.xib */,
+				C90D24C21789EEC0000FC8C6 /* WrappingTrial.xcdatamodeld */,
+				C90D24B11789EEC0000FC8C6 /* Supporting Files */,
+				C90D24CA1789F77A000FC8C6 /* WTGMatrix.h */,
+				C90D24CB1789F77A000FC8C6 /* WTGMatrix.mm */,
+			);
+			path = WrappingTrial;
+			sourceTree = "<group>";
+		};
+		C90D24B11789EEC0000FC8C6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C90D24B21789EEC0000FC8C6 /* WrappingTrial-Info.plist */,
+				C90D24B31789EEC0000FC8C6 /* InfoPlist.strings */,
+				C90D24B61789EEC0000FC8C6 /* main.m */,
+				C90D24B81789EEC0000FC8C6 /* WrappingTrial-Prefix.pch */,
+				C90D24B91789EEC0000FC8C6 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C90D24A61789EEC0000FC8C6 /* WrappingTrial */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C90D24C71789EEC0000FC8C6 /* Build configuration list for PBXNativeTarget "WrappingTrial" */;
+			buildPhases = (
+				C90D24A31789EEC0000FC8C6 /* Sources */,
+				C90D24A41789EEC0000FC8C6 /* Frameworks */,
+				C90D24A51789EEC0000FC8C6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WrappingTrial;
+			productName = WrappingTrial;
+			productReference = C90D24A71789EEC0000FC8C6 /* WrappingTrial.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C90D249F1789EEC0000FC8C6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = WT;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = catswearingbreadhats;
+			};
+			buildConfigurationList = C90D24A21789EEC0000FC8C6 /* Build configuration list for PBXProject "WrappingTrial" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C90D249E1789EEC0000FC8C6;
+			productRefGroup = C90D24A81789EEC0000FC8C6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C90D24A61789EEC0000FC8C6 /* WrappingTrial */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C90D24A51789EEC0000FC8C6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C90D24B51789EEC0000FC8C6 /* InfoPlist.strings in Resources */,
+				C90D24BB1789EEC0000FC8C6 /* Credits.rtf in Resources */,
+				C90D24C11789EEC0000FC8C6 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C90D24A31789EEC0000FC8C6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C90D24B71789EEC0000FC8C6 /* main.m in Sources */,
+				C90D24BE1789EEC0000FC8C6 /* WTAppDelegate.mm in Sources */,
+				C90D24C41789EEC0000FC8C6 /* WrappingTrial.xcdatamodeld in Sources */,
+				C90D24CC1789F77A000FC8C6 /* WTGMatrix.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C90D24B31789EEC0000FC8C6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C90D24B41789EEC0000FC8C6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		C90D24B91789EEC0000FC8C6 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C90D24BA1789EEC0000FC8C6 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		C90D24BF1789EEC0000FC8C6 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C90D24C01789EEC0000FC8C6 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C90D24C51789EEC0000FC8C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C90D24C61789EEC0000FC8C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C90D24C81789EEC0000FC8C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "compiler-default";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WrappingTrial/WrappingTrial-Prefix.pch";
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				INFOPLIST_FILE = "WrappingTrial/WrappingTrial-Info.plist";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = "-lGClasses";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C90D24C91789EEC0000FC8C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "compiler-default";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WrappingTrial/WrappingTrial-Prefix.pch";
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				INFOPLIST_FILE = "WrappingTrial/WrappingTrial-Info.plist";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = "-lGClasses";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C90D24A21789EEC0000FC8C6 /* Build configuration list for PBXProject "WrappingTrial" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C90D24C51789EEC0000FC8C6 /* Debug */,
+				C90D24C61789EEC0000FC8C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C90D24C71789EEC0000FC8C6 /* Build configuration list for PBXNativeTarget "WrappingTrial" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C90D24C81789EEC0000FC8C6 /* Debug */,
+				C90D24C91789EEC0000FC8C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C90D24C21789EEC0000FC8C6 /* WrappingTrial.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C90D24C31789EEC0000FC8C6 /* WrappingTrial.xcdatamodel */,
+			);
+			currentVersion = C90D24C31789EEC0000FC8C6 /* WrappingTrial.xcdatamodel */;
+			path = WrappingTrial.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = C90D249F1789EEC0000FC8C6 /* Project object */;
+}

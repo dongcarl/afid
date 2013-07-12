@@ -219,7 +219,7 @@ correspondingStringRange:(NSRange)incomingCorrespondingStringRange
 	}
 
 	[resultingStringToExport writeToFile:incomingExportFilePath
-	                          atomically:YES
+	                          atomically:atomicWriteDecision
 			                    encoding:encoding
 					               error:&resultingError];
 
