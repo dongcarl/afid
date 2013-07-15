@@ -328,7 +328,7 @@
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = "-lGClasses";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -346,7 +346,7 @@
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = "-lGClasses";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

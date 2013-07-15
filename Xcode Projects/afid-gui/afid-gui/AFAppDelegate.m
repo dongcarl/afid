@@ -45,28 +45,7 @@
 
 //lookie here!
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-//    NSRange features = {.location = 0, .length = 10};
-//    NSRange labels = {.location = 10, .length = 1};
-//
-//    
-//    AFSupervisedLearner *learner = [[AFSupervisedLearner alloc]initWithTrainingFile:@"/Users/dongcarl/Downloads/mydata.arff"
-//                                                                        testingFile:@"/Users/dongcarl/Documents/Organized/Dropbox/School/US Schooling/Choate Rosemary Hall/Junior Year/Summer/AFID/All Datasets/1/completeswapped.arff"
-//                                                                 featureColumnRange:features
-//                                                                   labelColumnRange:labels];
-////    [learner autoTune];
-//    [learner train];
-//    NSLog (@"%@",[learner predictionFromGestureVector:[[NSArray alloc]initWithObjects:[[NSNumber alloc]initWithInteger:918], //1
-//                                          [[NSNumber alloc]initWithInteger:784],    //2
-//                                          [[NSNumber alloc]initWithInteger:723],    //3
-//                                          [[NSNumber alloc]initWithInteger:770],    //4
-//                                          [[NSNumber alloc]initWithInteger:796],    //5
-//                                          [[NSNumber alloc]initWithInteger:811],    //6
-//                                          [[NSNumber alloc]initWithInteger:884],    //7
-//                                          [[NSNumber alloc]initWithInteger:856],    //8
-//                                          [[NSNumber alloc]initWithInteger:909],    //9
-//                                          [[NSNumber alloc]initWithInteger:805],nil]]);    //10
-}
+{}
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "catswearingbreadhats.afid_gui" in the user's Application Support directory.
 - (NSURL *)applicationFilesDirectory
@@ -231,23 +210,76 @@
 
 
 //things that matter...
-- (IBAction)submitButtonPressed:(NSButton *)sender
+- (IBAction)startButtonPressed:(id)sender
 {
-    NSMutableString *resultingString = [[NSMutableString alloc]init];
-    NSArray *incomingGestureVectors = [self.mainSerialCommunicator nextGestureVectors:[self.incomingNumberOfGestureVectorsToRecognize integerValue]];
+    NSDate *start = [NSDate date];
+    NSMutableString *resultingString = [[NSMutableString alloc]init];    
     
-    NSLog(@"%@", incomingGestureVectors);
-    
-    for (int i = 0; i < incomingGestureVectors.count; i++)
+    for (int i = 0; i < [self.incomingNumberOfGestureVectorsToRecognize integerValue]; i++)
     {
-        NSArray *currentGestureVector = [incomingGestureVectors objectAtIndex:i];
+        
+        
+        NSArray *currentGestureVector = [self.mainSerialCommunicator nextGestureVector];
+        NSLog(@"reading: %@", currentGestureVector);
         
         [resultingString appendString:[self.incomingCorrespondingStringInput stringValue]];
         [resultingString appendString:@","];
         
         for (int i = 0; i < currentGestureVector.count; i++)
         {
-            [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+            
+            switch (i) {
+                case 0:
+                    [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+                    self.input1.stringValue = [currentGestureVector objectAtIndex:i];
+                    break;
+                    
+                case 1:
+                    [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+                    self.input2.stringValue = [currentGestureVector objectAtIndex:i];
+                    break;
+                    
+                case 2:
+                    [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+                    self.input3.stringValue = [currentGestureVector objectAtIndex:i];
+                    break;
+                    
+                case 3:
+                    [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+                    self.input4.stringValue = [currentGestureVector objectAtIndex:i];
+                    break;
+                    
+                case 4:
+                    [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+                    self.input5.stringValue = [currentGestureVector objectAtIndex:i];
+                    break;
+                    
+                case 5:
+                    [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+                    self.input6.stringValue = [currentGestureVector objectAtIndex:i];
+                    break;
+                    
+                case 6:
+                    [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+                    self.input7.stringValue = [currentGestureVector objectAtIndex:i];
+                    break;
+                    
+                case 7:
+                    [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+                    self.input8.stringValue = [currentGestureVector objectAtIndex:i];
+                    break;
+                    
+                case 8:
+                    [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+                    self.input9.stringValue = [currentGestureVector objectAtIndex:i];
+                    break;
+                    
+                case 9:
+                    [resultingString appendString:[currentGestureVector objectAtIndex:i]];
+                    self.input10.stringValue = [currentGestureVector objectAtIndex:i];
+                    break;
+            }
+            
             if (i == currentGestureVector.count-1)
             {
                 [resultingString appendFormat:@"%c", '\n'];
@@ -257,49 +289,32 @@
                 [resultingString appendString:@","];
             }
         }
+        self.incomingRemainingGestures.integerValue = self.incomingNumberOfGestureVectorsToRecognize.integerValue - i - 1;
+        self.incomingTimeElapsed.stringValue = stringFromInterval(-[start timeIntervalSinceNow]);
+        [self.window display];
     }
-    
+
     NSError *error;
     [resultingString writeToFile:[self.incomingExportPath stringValue] atomically:YES encoding:NSASCIIStringEncoding error:&error];
 
 }
 
-- (IBAction)loadButtonPressed:(id)sender
+NSString *stringFromInterval(NSTimeInterval timeInterval)
 {
-    NSRange features = {.location = 0, .length = 10};
-    NSRange labels = {.location = 10, .length = 1};
-//    [self.mainActionDefinitionStack trainWithStandardConfigurationsForFile:[self.incomingTrainingPath stringValue]];
-    self.mainLearner = [[AFSupervisedLearner alloc]initWithTrainingFile:self.incomingTrainingPath.stringValue testingFile:@"/Users/dongcarl/Documents/Organized/Dropbox/School/US Schooling/Choate Rosemary Hall/Junior Year/Summer/AFID/All Datasets/1/completeswapped.arff" featureColumnRange:features labelColumnRange:labels];
-    [self.mainLearner autoTune];
-    [self.mainLearner train];
-}
-
-- (IBAction)exportButtonPressed:(id)sender
-{
-	[self.mainActionDefinitionStack exportCurrentActionDefinitionStackWithStandardConfigurationTo:[self.incomingExportPath stringValue]];
-}
-
-- (IBAction)startRecognitionPressed:(id)sender
-{
-//	NSString *recognized = [self.mainActionDefinitionStack recognizeWithBoundingboxMethod:[self.mainSerialCommunicator nextGestureVectorFromOpenedSerialPort]];
-    NSString *recognized = [self.mainLearner predictionFromGestureVector:[self.mainSerialCommunicator nextGestureVector]];
-	[self.incomingCurrentlySeeingText setStringValue:recognized];
-}
-
-- (IBAction)recognizeFromBelowPressed:(id)sender
-{
-    NSArray *incomingGestureVector = [[NSArray alloc]initWithObjects:[[NSNumber alloc]initWithInteger:[self.input1 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input2 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input3 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input4 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input5 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input6 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input7 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input8 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input9 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input10 integerValue]],nil];
-    NSString *recognizedGesture = [self.mainActionDefinitionStack recognizeWithBoundingboxMethod:incomingGestureVector];
-    [self.incomingCurrentlySeeingText setStringValue:recognizedGesture];
+#define SECONDS_PER_MINUTE (60)
+#define MINUTES_PER_HOUR (60)
+#define SECONDS_PER_HOUR (SECONDS_PER_MINUTE * MINUTES_PER_HOUR)
+#define HOURS_PER_DAY (24)
+    
+    // convert the time to an integer, as we don't need double precision, and we do need to use the modulous operator
+    int ti = round(timeInterval);
+    
+    return [NSString stringWithFormat:@"%.2d:%.2d:%.2d", (ti / SECONDS_PER_HOUR) % HOURS_PER_DAY, (ti / SECONDS_PER_MINUTE) % MINUTES_PER_HOUR, ti % SECONDS_PER_MINUTE];
+    
+#undef SECONDS_PER_MINUTE
+#undef MINUTES_PER_HOUR
+#undef SECONDS_PER_HOUR
+#undef HOURS_PER_DAY
 }
 
 
