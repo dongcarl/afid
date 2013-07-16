@@ -46,26 +46,7 @@
 //lookie here!
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-//    NSRange features = {.location = 0, .length = 10};
-//    NSRange labels = {.location = 10, .length = 1};
-//
-//    
-//    AFSupervisedLearner *learner = [[AFSupervisedLearner alloc]initWithTrainingFile:@"/Users/dongcarl/Downloads/mydata.arff"
-//                                                                        testingFile:@"/Users/dongcarl/Documents/Organized/Dropbox/School/US Schooling/Choate Rosemary Hall/Junior Year/Summer/AFID/All Datasets/1/completeswapped.arff"
-//                                                                 featureColumnRange:features
-//                                                                   labelColumnRange:labels];
-////    [learner autoTune];
-//    [learner train];
-//    NSLog (@"%@",[learner predictionFromGestureVector:[[NSArray alloc]initWithObjects:[[NSNumber alloc]initWithInteger:918], //1
-//                                          [[NSNumber alloc]initWithInteger:784],    //2
-//                                          [[NSNumber alloc]initWithInteger:723],    //3
-//                                          [[NSNumber alloc]initWithInteger:770],    //4
-//                                          [[NSNumber alloc]initWithInteger:796],    //5
-//                                          [[NSNumber alloc]initWithInteger:811],    //6
-//                                          [[NSNumber alloc]initWithInteger:884],    //7
-//                                          [[NSNumber alloc]initWithInteger:856],    //8
-//                                          [[NSNumber alloc]initWithInteger:909],    //9
-//                                          [[NSNumber alloc]initWithInteger:805],nil]]);    //10
+    
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "catswearingbreadhats.afid_gui" in the user's Application Support directory.
@@ -231,52 +212,69 @@
 
 
 //things that matter...
-- (IBAction)submitButtonPressed:(NSButton *)sender
-{
-	for (int i = 0; i < [self.incomingNumberOfGestureVectorsToRecognize intValue]; i++)
-	{
-		[self.mainActionDefinitionStack trainWithGestureVector:[self.mainSerialCommunicator nextGestureVector]
-		                                            bufferSize:[self.incomingBufferSize integerValue]
-				                           correspondingString:[self.incomingCorrespondingStringInput stringValue]];
-	}
-}
 
-- (IBAction)loadButtonPressed:(id)sender
-{
-    NSRange features = {.location = 0, .length = 10};
-    NSRange labels = {.location = 10, .length = 1};
-//    [self.mainActionDefinitionStack trainWithStandardConfigurationsForFile:[self.incomingTrainingPath stringValue]];
-    self.mainLearner = [[AFSupervisedLearner alloc]initWithTrainingFile:self.incomingTrainingPath.stringValue testingFile:@"/Users/dongcarl/Documents/Organized/Dropbox/School/US Schooling/Choate Rosemary Hall/Junior Year/Summer/AFID/All Datasets/1/completeswapped.arff" featureColumnRange:features labelColumnRange:labels];
+- (IBAction)trainButtonPushed:(id)sender
+{    
+    self.mainLearner = [[AFSupervisedLearner alloc]initWithTrainingFile:[[self.incomingTrainingPath stringValue] stringByExpandingTildeInPath]
+                                                     featureColumnRange:NSMakeRange([self.incomingDataRangeLocation integerValue], [self.incomingDataRangeLength integerValue])
+                                                       labelColumnRange:NSMakeRange([self.incomingLabelsRangeLocation integerValue], [self.incomingLabelsRangeLength integerValue])];
     [self.mainLearner autoTune];
     [self.mainLearner train];
 }
 
-- (IBAction)exportButtonPressed:(id)sender
+- (IBAction)predictFromArduinoButtonPushed:(id)sender
 {
-	[self.mainActionDefinitionStack exportCurrentActionDefinitionStackWithStandardConfigurationTo:[self.incomingExportPath stringValue]];
+    NSUInteger numberToRecognize = [self.incomingArduinoNumInputs integerValue];
+    
+    NSUInteger numCorrect = 0;
+    
+    for (int i = 0; i < numberToRecognize; i++)
+    {
+        NSArray *currentGestureVector = [self.mainSerialCommunicator nextGestureVector];
+        
+        self.outgoingDimension1.stringValue = [currentGestureVector objectAtIndex:0];
+        self.outgoingDimension2.stringValue = [currentGestureVector objectAtIndex:1];
+        self.outgoingDimension3.stringValue = [currentGestureVector objectAtIndex:2];
+        self.outgoingDimension4.stringValue = [currentGestureVector objectAtIndex:3];
+        self.outgoingDimension5.stringValue = [currentGestureVector objectAtIndex:4];
+        self.outgoingDimension6.stringValue = [currentGestureVector objectAtIndex:5];
+        self.outgoingDimension7.stringValue = [currentGestureVector objectAtIndex:6];
+        self.outgoingDimension8.stringValue = [currentGestureVector objectAtIndex:7];
+        self.outgoingDimension9.stringValue = [currentGestureVector objectAtIndex:8];
+        self.outgoingDimension10.stringValue = [currentGestureVector objectAtIndex:9];
+        
+        NSString *prediction = [self.mainLearner predictionFromGestureVector:currentGestureVector];
+        self.outgoingPredictedString.stringValue = prediction;
+        
+        if ([self.incomingExpectedString.stringValue isEqualTo:prediction])
+        {
+            numCorrect++;
+        }
+        
+        self.outgoingAccuracy.stringValue = [[NSString alloc]initWithFormat:@"%.5f%%", ((double)numCorrect*100)/(numberToRecognize+1)];
+        
+        [self.window display];
+    }
 }
 
-- (IBAction)startRecognitionPressed:(id)sender
+- (IBAction)predictFromFileButtonPushed:(id)sender
 {
-//	NSString *recognized = [self.mainActionDefinitionStack recognizeWithBoundingboxMethod:[self.mainSerialCommunicator nextGestureVectorFromOpenedSerialPort]];
-    NSString *recognized = [self.mainLearner predictionFromGestureVector:[self.mainSerialCommunicator nextGestureVector]];
-	[self.incomingCurrentlySeeingText setStringValue:recognized];
+    self.outgoingAccuracy.stringValue = [[NSString alloc]initWithFormat:@"%.5f%%", [[self.mainLearner accuracyWithARFFFile:[[self.incomingTestingPath stringValue] stringByExpandingTildeInPath]] doubleValue]*100];
 }
 
-- (IBAction)recognizeFromBelowPressed:(id)sender
+- (IBAction)predictedFromRawDatPushed:(id)sender
 {
-    NSArray *incomingGestureVector = [[NSArray alloc]initWithObjects:[[NSNumber alloc]initWithInteger:[self.input1 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input2 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input3 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input4 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input5 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input6 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input7 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input8 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input9 integerValue]],
-                                      [[NSNumber alloc]initWithInteger:[self.input10 integerValue]],nil];
-    NSString *recognizedGesture = [self.mainActionDefinitionStack recognizeWithBoundingboxMethod:incomingGestureVector];
-    [self.incomingCurrentlySeeingText setStringValue:recognizedGesture];
+    NSArray *incomingGestureVector = [[self.incomingRawData stringValue] componentsSeparatedByString:[[NSString alloc]initWithFormat:@","]];
+    NSString *prediction = [self.mainLearner predictionFromGestureVector:incomingGestureVector];
+    self.outgoingPredictedString.stringValue = prediction;
+    if ([self.incomingExpectedString.stringValue isEqualTo:prediction])
+    {
+        self.outgoingAccuracy.stringValue = [[NSString alloc]initWithFormat:@"%.5f%%", 1.0000000];
+    }
+    else
+    {
+        self.outgoingAccuracy.stringValue = [[NSString alloc]initWithFormat:@"%.5f%%", 0.0000000];
+    }    
 }
 
 @end

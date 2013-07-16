@@ -8,7 +8,6 @@
 #import "AFSupervisedLearner.h"
 
 #include <GClasses/GMatrix.h>
-#include <GClasses/GHolders.h>
 #include <GClasses/GLearner.h>
 #include <GClasses/GDecisionTree.h>
 #include <GClasses/GNeuralNet.h>
@@ -25,44 +24,31 @@
 {
     GClasses::GMatrix *features;
     GClasses::GMatrix *labels;
-    GClasses::GMatrix *testingData; 
-    GClasses::GDecisionTree *cppSelf;
+    GClasses::GKNN *cppSelf;
 }
-
-//@property (nonatomic) GClasses::GMatrix *features;
-//@property (nonatomic) GClasses::GMatrix *labels;
-//@property (nonatomic) GClasses::GMatrix *testingData;
-//
-//@property (nonatomic, readwrite, assign) GClasses::GSupervisedLearner *cppSelf;
 
 @end
 
 @implementation AFSupervisedLearner
 
 @synthesize ARFFTrainingFilePath = _ARFFTrainingFilePath;
-@synthesize ARFFTestingFilePath = _ARFFTestingFilePath;
 
 
 using namespace GClasses;
 
 - (id)initWithTrainingFile:(NSString *)incomingARFFTrainingFilePath
-               testingFile:(NSString *)incomingARFFTestingFilePath
         featureColumnRange:(NSRange)incomingFeatureColumnRange
           labelColumnRange:(NSRange)incomingLabelColumnRange;
 {
 	if (self = [super init])
 	{
         self.ARFFTrainingFilePath = incomingARFFTrainingFilePath;
-        GMatrix* pTrainingData = GMatrix::loadArff([incomingARFFTrainingFilePath UTF8String]);
-        
-        self.ARFFTestingFilePath = incomingARFFTestingFilePath;
-        GMatrix* pTestingData = GMatrix::loadArff([incomingARFFTestingFilePath UTF8String]);
-        
+        GClasses::GMatrix* pTrainingData = GClasses::GMatrix::loadArff([incomingARFFTrainingFilePath UTF8String]);
+                
         features = pTrainingData->cloneSub(0, incomingFeatureColumnRange.location, pTrainingData->rows(), incomingFeatureColumnRange.length);
         labels = pTrainingData->cloneSub(0, incomingLabelColumnRange.location, pTrainingData->rows(), incomingLabelColumnRange.length);
-        testingData = pTestingData;
         GClasses::GRand *rand = new GClasses::GRand(0);
-        cppSelf = new GDecisionTree(*rand);
+        cppSelf = new GClasses::GKNN(*rand);
 	}
     return self;
 }
@@ -78,39 +64,46 @@ using namespace GClasses;
 }
 
 - (NSString *)predictionFromGestureVector:(NSArray *)incomingGestureVector
-{
-	GClasses::GMatrix *incomingGestureVectorMatrix = new GClasses::GMatrix(1, incomingGestureVector.count);
-    GMatrix &M = *incomingGestureVectorMatrix;
-	for (int i = 0; i < incomingGestureVector.count; i++)
-	{
-		M[0][i] = [[incomingGestureVector objectAtIndex:i] integerValue];
-	}
+{    
+    NSUInteger numberOfDimensions = incomingGestureVector.count;
+    double c_incomingGestureVector[numberOfDimensions];
+    for (int i = 0; i < numberOfDimensions; i++)
+    {
+        c_incomingGestureVector[i] = [[incomingGestureVector objectAtIndex:i]doubleValue];
+    }
     
     double pOut[1];
-    
-    incomingGestureVectorMatrix->print(std::cout);
-    
-    cppSelf->predict(incomingGestureVectorMatrix->row(0), pOut);
+    cppSelf->predict(c_incomingGestureVector, pOut);
     
     std::ostringstream stream;
     labels->relation()->printAttrValue(stream, 0, pOut[0]);
     
-    std::cout << pOut[0];
     
     NSString *result = [[NSString alloc]initWithCString:stream.str().c_str() encoding:[NSString defaultCStringEncoding]];
     
-//    for (long i = 0; i < features->rows(); i++)
-//    {
-//        double pred[1];
-//        cppSelf->predict(features->row(i), pred);
-////        NSLog(@"gestureVector: %f", *incomingGestureVectorMatrix->row(i));
-//        
-//        std::ostringstream stream3;
-//        labels->relation()->printAttrValue(stream3, 0, pred[0]);
-//        NSLog(@"predicted as: %s", stream3.str().c_str());
-//    }
-    
 	return result;
+}
+
+- (NSNumber *)accuracyWithARFFFile:(NSString *)incomingTestingARFFFilePath;
+{
+    NSNumber *resultingAccuracy;
+    
+    GClasses::GMatrix* incomingTestingDataWithLabel = GClasses::GMatrix::loadArff([incomingTestingARFFFilePath UTF8String]);
+    GClasses::GMatrix *incomingTestingDataWithoutLabel = incomingTestingDataWithLabel->cloneSub(0, 0, incomingTestingDataWithLabel->rows(), 10);
+    NSUInteger numberOfSuccessfulMatches = 0;
+    
+    for (int i = 0; i < incomingTestingDataWithoutLabel->rows(); i++)
+    {
+        double pOut[1];
+        self->cppSelf->predict(incomingTestingDataWithoutLabel->row(i), pOut);
+        if (pOut[0] == (*incomingTestingDataWithLabel)[i][10])
+        {
+            numberOfSuccessfulMatches++;
+        }
+    }
+    
+    resultingAccuracy = [[NSNumber alloc]initWithDouble:(((double)numberOfSuccessfulMatches) / incomingTestingDataWithLabel->rows())];
+    return resultingAccuracy;
 }
 
 @end

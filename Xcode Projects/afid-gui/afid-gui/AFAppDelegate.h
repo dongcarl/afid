@@ -18,32 +18,30 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 //MINE!!
-@property (weak) IBOutlet NSTextField *incomingNumberOfGestureVectorsToRecognize;
-@property (weak) IBOutlet NSTextField *incomingCorrespondingStringInput;
-@property (weak) IBOutlet NSTextField *incomingBufferSize;
-@property (weak) IBOutlet NSButton *submitButton;
+@property (weak) IBOutlet NSTextField *incomingDataRangeLocation;
+@property (weak) IBOutlet NSTextField *incomingDataRangeLength;
+@property (weak) IBOutlet NSTextField *incomingLabelsRangeLocation;
+@property (weak) IBOutlet NSTextField *incomingLabelsRangeLength;
+
 
 @property (weak) IBOutlet NSTextField *incomingTrainingPath;
-@property (weak) IBOutlet NSButton *loadButton;
+@property (weak) IBOutlet NSTextField *incomingExpectedString;
+@property (weak) IBOutlet NSTextField *incomingArduinoNumInputs;
+@property (weak) IBOutlet NSTextField *incomingTestingPath;
+@property (weak) IBOutlet NSTextField *incomingRawData;
 
-@property (weak) IBOutlet NSTextField *incomingExportPath;
-@property (weak) IBOutlet NSButton *exportButton;
-
-@property (weak) IBOutlet NSButton *arduinoRecognizeButton;
-@property (weak) IBOutlet NSTextField *incomingCurrentlySeeingText;
-
-@property (weak) IBOutlet NSButton *belowRecognizeButton;
-
-@property (weak) IBOutlet NSTextField *input1;
-@property (weak) IBOutlet NSTextField *input2;
-@property (weak) IBOutlet NSTextField *input3;
-@property (weak) IBOutlet NSTextField *input4;
-@property (weak) IBOutlet NSTextField *input5;
-@property (weak) IBOutlet NSTextField *input6;
-@property (weak) IBOutlet NSTextField *input7;
-@property (weak) IBOutlet NSTextField *input8;
-@property (weak) IBOutlet NSTextField *input9;
-@property (weak) IBOutlet NSTextField *input10;
+@property (weak) IBOutlet NSTextField *outgoingPredictedString;
+@property (weak) IBOutlet NSTextField *outgoingDimension1;
+@property (weak) IBOutlet NSTextField *outgoingDimension2;
+@property (weak) IBOutlet NSTextField *outgoingDimension3;
+@property (weak) IBOutlet NSTextField *outgoingDimension4;
+@property (weak) IBOutlet NSTextField *outgoingDimension5;
+@property (weak) IBOutlet NSTextField *outgoingDimension6;
+@property (weak) IBOutlet NSTextField *outgoingDimension7;
+@property (weak) IBOutlet NSTextField *outgoingDimension8;
+@property (weak) IBOutlet NSTextField *outgoingDimension9;
+@property (weak) IBOutlet NSTextField *outgoingDimension10;
+@property (weak) IBOutlet NSTextField *outgoingAccuracy;
 
 
 
@@ -58,5 +56,11 @@
 - (IBAction)exportButtonPressed:(id)sender;
 - (IBAction)startRecognitionPressed:(id)sender;
 - (IBAction)recognizeFromBelowPressed:(id)sender;
+
+
+- (IBAction)trainButtonPushed:(id)sender;
+- (IBAction)predictFromArduinoButtonPushed:(id)sender;
+- (IBAction)predictFromFileButtonPushed:(id)sender;
+- (IBAction)predictFromRawDatPushed:(id)sender;
 
 @end

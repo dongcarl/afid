@@ -164,6 +164,7 @@ correspondingStringRange:(NSRange)incomingCorrespondingStringRange
 	[self exportCurrentActionDefinitionStackTo:exportFilePath
 	                             lineSeperator:[[NSString alloc] initWithFormat:@"%c", '\n']
 				              elementSeperator:[[NSString alloc] initWithFormat:@","]];
+    return nil;
 }
 
 - (NSError *)exportCurrentActionDefinitionStackTo:(NSString *)exportFilePath

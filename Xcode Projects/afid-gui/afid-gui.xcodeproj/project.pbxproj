@@ -24,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		45583177966C39C4AB916401 /* AFSupervisedLearner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSupervisedLearner.h; sourceTree = "<group>"; };
+		4558326498B4F0057BF1F57F /* AFSupervisedLearnerWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSupervisedLearnerWrapper.h; sourceTree = "<group>"; };
 		455832E67D60051F8EDFCAE2 /* AFActionDefinitionStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFActionDefinitionStack.h; sourceTree = "<group>"; };
 		45583BE98FE462B830123EEB /* AFSupervisedLearner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AFSupervisedLearner.mm; sourceTree = "<group>"; };
 		45583C389B25E891AC59C7A6 /* AFHashRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHashRecognizer.m; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 			children = (
 				45583BE98FE462B830123EEB /* AFSupervisedLearner.mm */,
 				45583177966C39C4AB916401 /* AFSupervisedLearner.h */,
+				4558326498B4F0057BF1F57F /* AFSupervisedLearnerWrapper.h */,
 			);
 			name = SupervisedLearners;
 			sourceTree = "<group>";
@@ -328,7 +330,7 @@
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = "-lGClasses";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = "";
+				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -346,7 +348,7 @@
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = "-lGClasses";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = "";
+				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -8,7 +8,6 @@
 @interface AFSupervisedLearner : NSObject
 
 - (id)initWithTrainingFile:(NSString *)incomingARFFTrainingFilePath
-               testingFile:(NSString *)incomingARFFTestingFilePath
         featureColumnRange:(NSRange)incomingFeatureColumnRange
           labelColumnRange:(NSRange)incomingLabelColumnRange;
 
@@ -23,6 +22,7 @@
 - (void)autoTune;
 - (void)train;
 - (NSString *)predictionFromGestureVector:(NSArray *)incomingGestureVector;
+- (NSNumber *)accuracyWithARFFFile:(NSString *)incomingTestingARFFFilePath;
 
 //helpers
 
