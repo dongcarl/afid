@@ -45,7 +45,35 @@
 
 //lookie here!
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{}
+{
+    NSArray *arrayOfAlphabet = [[NSArray alloc]initWithObjects:@"A",
+                                @"B",
+                                @"C",
+                                @"D",
+                                @"E",
+                                @"F",
+                                @"G",
+                                @"H",
+                                @"I",
+                                @"K",
+                                @"L",
+                                @"M",
+                                @"N",
+                                @"O",
+                                @"P",
+                                @"Q",
+                                @"R",
+                                @"S",
+                                @"T",
+                                @"U",
+                                @"V",
+                                @"W",
+                                @"X",
+                                @"Y",nil];
+    for (
+    
+
+}
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "catswearingbreadhats.afid_gui" in the user's Application Support directory.
 - (NSURL *)applicationFilesDirectory
