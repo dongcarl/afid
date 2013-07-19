@@ -64,7 +64,8 @@ using namespace GClasses;
 }
 
 - (NSString *)predictionFromGestureVector:(NSArray *)incomingGestureVector
-{    
+{
+    NSLog(@"in prediction from... with... %@",incomingGestureVector);
     NSUInteger numberOfDimensions = incomingGestureVector.count;
     double c_incomingGestureVector[numberOfDimensions];
     for (int i = 0; i < numberOfDimensions; i++)
@@ -105,5 +106,6 @@ using namespace GClasses;
     resultingAccuracy = [[NSNumber alloc]initWithDouble:(((double)numberOfSuccessfulMatches) / incomingTestingDataWithLabel->rows())];
     return resultingAccuracy;
 }
+
 
 @end

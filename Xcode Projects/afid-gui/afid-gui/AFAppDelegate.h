@@ -12,6 +12,7 @@
 @interface AFAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
+@property (weak) IBOutlet NSView *hud;
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -61,6 +62,6 @@
 - (IBAction)trainButtonPushed:(id)sender;
 - (IBAction)predictFromArduinoButtonPushed:(id)sender;
 - (IBAction)predictFromFileButtonPushed:(id)sender;
-- (IBAction)predictFromRawDatPushed:(id)sender;
+- (IBAction)predictFromRawDataButtonPushed:(id)sender;
 
 @end
