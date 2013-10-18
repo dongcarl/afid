@@ -5,25 +5,32 @@
 // To change the template use AppCode | Preferences | File Templates.
 //
 
+#ifdef __cplusplus
+#include <GClasses/GMatrix.h>
+#include <GClasses/GKNN.h>
+#include <GClasses/GRand.h>
+#endif
+
+#import "AFDataset.h"
+
 @interface AFSupervisedLearner : NSObject
 
-- (id)initWithTrainingFile:(NSString *)incomingARFFTrainingFilePath
-        featureColumnRange:(NSRange)incomingFeatureColumnRange
-          labelColumnRange:(NSRange)incomingLabelColumnRange;
+@property (nonatomic) AFDataset *currentDataSet;
 
-@property (nonatomic) NSString *ARFFTrainingFilePath;
-@property (nonatomic) NSString *ARFFTestingFilePath;
-@property (nonatomic) NSDictionary *predictionDefinition;
-
+#ifdef __cplusplus
+@property (nonatomic) GClasses::GKNN *cppSelf;
+#endif
 
 //initializers
+- (id)initWithDataSet:(AFDataset *)incomingDataSet
+             autotune:(BOOL)incomingAutoTuneDecision
+                train:(BOOL)incomingTrainDecision;
 
-
-- (void)autoTune;
-- (void)train;
+//others
+- (void)autoTuneWithCurrentDataSet;
+- (void)autoTuneWithDataSet:(AFDataset *)incomingDataSet;
+- (void)trainWithCurrentDataSet;
+- (void)trainWithDataSet:(AFDataset *)incomingDataSet;
 - (NSString *)predictionFromGestureVector:(NSArray *)incomingGestureVector;
-- (NSNumber *)accuracyWithARFFFile:(NSString *)incomingTestingARFFFilePath;
-
-//helpers
 
 @end

@@ -6,106 +6,103 @@
 //
 #import <Foundation/Foundation.h>
 #import "AFSupervisedLearner.h"
+#include <mach/mach_time.h>
 
-#include <GClasses/GMatrix.h>
-#include <GClasses/GLearner.h>
-#include <GClasses/GDecisionTree.h>
-#include <GClasses/GNeuralNet.h>
-#include <GClasses/GEnsemble.h>
-#include <GClasses/GPolynomial.h>
-#include <GClasses/GRand.h>
-#include <GClasses/GGaussianProcess.h>
-#include <GClasses/GLinear.h>
-#include <GClasses/GNaiveBayes.h>
-#include <GClasses/GKNN.h>
-#include <GClasses/GNaiveInstance.h>
+
+using namespace GClasses;
 
 @interface AFSupervisedLearner ()
 {
-    GClasses::GMatrix *features;
-    GClasses::GMatrix *labels;
-    GClasses::GKNN *cppSelf;
+
 }
 
 @end
 
 @implementation AFSupervisedLearner
 
-@synthesize ARFFTrainingFilePath = _ARFFTrainingFilePath;
-
-
-using namespace GClasses;
-
-- (id)initWithTrainingFile:(NSString *)incomingARFFTrainingFilePath
-        featureColumnRange:(NSRange)incomingFeatureColumnRange
-          labelColumnRange:(NSRange)incomingLabelColumnRange;
+- (GClasses::GKNN *)cppSelf
 {
-	if (self = [super init])
-	{
-        self.ARFFTrainingFilePath = incomingARFFTrainingFilePath;
-        GClasses::GMatrix* pTrainingData = GClasses::GMatrix::loadArff([incomingARFFTrainingFilePath UTF8String]);
-                
-        features = pTrainingData->cloneSub(0, incomingFeatureColumnRange.location, pTrainingData->rows(), incomingFeatureColumnRange.length);
-        labels = pTrainingData->cloneSub(0, incomingLabelColumnRange.location, pTrainingData->rows(), incomingLabelColumnRange.length);
-        GClasses::GRand *rand = new GClasses::GRand(0);
-        cppSelf = new GClasses::GKNN(*rand);
-	}
+    if (!_cppSelf)
+    {
+        uint64_t seed = mach_absolute_time();
+        _cppSelf = new GKNN(*(new GRand(seed)));
+    }
+    return _cppSelf;
+}
+
+- (id)initWithDataSet:(AFDataset *)incomingDataSet
+             autotune:(BOOL)incomingAutoTuneDecision
+                train:(BOOL)incomingTrainDecision
+{
+    NSLog(@"going to init");
+    if (self = [super init])
+    {
+        NSLog(@"super initted, going to set dataset");
+        self.currentDataSet = incomingDataSet;
+        
+        if(self.cppSelf == nil)
+        {
+            NSLog(@"it is nil!");
+        }
+        
+        NSLog(@"dataset is set, going to autotune");
+        if (incomingAutoTuneDecision)
+        {[self autoTuneWithCurrentDataSet];}
+        NSLog(@"autotuned, going to train");
+        if (incomingTrainDecision)
+        {[self trainWithCurrentDataSet];}
+        NSLog(@"trained, init finished");
+    }
     return self;
 }
 
-- (void)train
+- (void)trainWithCurrentDataSet
 {
-	cppSelf->train(*features, *labels);
+	[self trainWithDataSet:self.currentDataSet];
 }
 
-- (void)autoTune
+- (void)autoTuneWithCurrentDataSet
 {
-    cppSelf->autoTune(*features, *labels);
+    [self autoTuneWithDataSet:self.currentDataSet];
+}
+
+- (void)autoTuneWithDataSet:(AFDataset *)incomingDataSet
+{
+    self.cppSelf->autoTune(*incomingDataSet.featuresMatrix, *incomingDataSet.labelsMatrix);
+}
+
+- (void)trainWithDataSet:(AFDataset *)incomingDataSet
+{
+    NSLog(@"going to train... and I am  %p", self);
+    self.cppSelf->train(*[incomingDataSet featuresMatrix], *[incomingDataSet labelsMatrix]);
 }
 
 - (NSString *)predictionFromGestureVector:(NSArray *)incomingGestureVector
 {
+    NSLog(@"in method of interest");
     NSLog(@"in prediction from... with... %@",incomingGestureVector);
     NSUInteger numberOfDimensions = incomingGestureVector.count;
     double c_incomingGestureVector[numberOfDimensions];
+    NSLog(@"declared c_incomingGestureVector, going to populate");
     for (int i = 0; i < numberOfDimensions; i++)
     {
         c_incomingGestureVector[i] = [[incomingGestureVector objectAtIndex:i]doubleValue];
     }
+    NSLog(@"set up the c_incomingGestureVector");
+    NSLog(@"going to print c_incomingGestureVector");
     
-    double pOut[1];
-    cppSelf->predict(c_incomingGestureVector, pOut);
-    
-    std::ostringstream stream;
-    labels->relation()->printAttrValue(stream, 0, pOut[0]);
-    
-    
-    NSString *result = [[NSString alloc]initWithCString:stream.str().c_str() encoding:[NSString defaultCStringEncoding]];
-    
-	return result;
-}
-
-- (NSNumber *)accuracyWithARFFFile:(NSString *)incomingTestingARFFFilePath;
-{
-    NSNumber *resultingAccuracy;
-    
-    GClasses::GMatrix* incomingTestingDataWithLabel = GClasses::GMatrix::loadArff([incomingTestingARFFFilePath UTF8String]);
-    GClasses::GMatrix *incomingTestingDataWithoutLabel = incomingTestingDataWithLabel->cloneSub(0, 0, incomingTestingDataWithLabel->rows(), 10);
-    NSUInteger numberOfSuccessfulMatches = 0;
-    
-    for (int i = 0; i < incomingTestingDataWithoutLabel->rows(); i++)
+    for (int i = 0 ; i < numberOfDimensions; i++)
     {
-        double pOut[1];
-        self->cppSelf->predict(incomingTestingDataWithoutLabel->row(i), pOut);
-        if (pOut[0] == (*incomingTestingDataWithLabel)[i][10])
-        {
-            numberOfSuccessfulMatches++;
-        }
+        NSLog(@"the %dth element in the array is %f", i, c_incomingGestureVector[i]);
     }
     
-    resultingAccuracy = [[NSNumber alloc]initWithDouble:(((double)numberOfSuccessfulMatches) / incomingTestingDataWithLabel->rows())];
-    return resultingAccuracy;
+    double pOut[1];
+    NSLog(@"declared pOut, going to predict");
+    NSLog(@"going to predict, and i am %p", self);
+    self.cppSelf->predict(c_incomingGestureVector, pOut);
+    NSLog(@"prediction completed");
+    NSLog(@"pOut: %f", pOut[0]);
+    return [self.currentDataSet labelForPrediction:pOut];
 }
-
 
 @end

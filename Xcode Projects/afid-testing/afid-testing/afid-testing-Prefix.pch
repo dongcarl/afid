@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'afid-testing' target in the 'afid-testing' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

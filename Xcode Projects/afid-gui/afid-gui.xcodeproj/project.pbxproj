@@ -20,16 +20,20 @@
 		C91C721B177E0C7400A362F7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C91C721A177E0C7400A362F7 /* IOKit.framework */; };
 		C91C722C177E0D7400A362F7 /* AFSerialCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C722B177E0D7400A362F7 /* AFSerialCommunicator.m */; };
 		C91C7232177E0DE800A362F7 /* AFActionDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C7231177E0DE800A362F7 /* AFActionDefinition.m */; };
+		C95727BD17A1714B00ACF2A7 /* AFAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95727BC17A1714B00ACF2A7 /* AFAppController.m */; };
+		C99B6D55179A186600B16E64 /* AFDataset.mm in Sources */ = {isa = PBXBuildFile; fileRef = C99B6D54179A186600B16E64 /* AFDataset.mm */; };
+		C9B33D7717A88A2E00F318E0 /* AFTextDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B33D7617A88A2E00F318E0 /* AFTextDisplayController.m */; };
+		C9C52FA017A0586E00AE3DA5 /* AFHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C52F9F17A0586E00AE3DA5 /* AFHUDViewController.m */; };
+		C9C52FA317A05A8C00AE3DA5 /* AFHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C52FA217A05A8C00AE3DA5 /* AFHUDView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		45583177966C39C4AB916401 /* AFSupervisedLearner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSupervisedLearner.h; sourceTree = "<group>"; };
-		4558326498B4F0057BF1F57F /* AFSupervisedLearnerWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSupervisedLearnerWrapper.h; sourceTree = "<group>"; };
-		455832E67D60051F8EDFCAE2 /* AFActionDefinitionStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFActionDefinitionStack.h; sourceTree = "<group>"; };
+		455832E67D60051F8EDFCAE2 /* AFActionDefinitionStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFActionDefinitionStack.h; path = "afid-gui/AFActionDefinitionStack.h"; sourceTree = "<group>"; };
 		45583BE98FE462B830123EEB /* AFSupervisedLearner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AFSupervisedLearner.mm; sourceTree = "<group>"; };
-		45583C389B25E891AC59C7A6 /* AFHashRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHashRecognizer.m; sourceTree = "<group>"; };
-		45583D27F73AD562E8B36841 /* AFActionDefinitionStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFActionDefinitionStack.m; sourceTree = "<group>"; };
-		45583E1685EFDA0B79FD1B14 /* AFHashRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHashRecognizer.h; sourceTree = "<group>"; };
+		45583C389B25E891AC59C7A6 /* AFHashRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHashRecognizer.m; path = "afid-gui/AFHashRecognizer.m"; sourceTree = "<group>"; };
+		45583D27F73AD562E8B36841 /* AFActionDefinitionStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFActionDefinitionStack.m; path = "afid-gui/AFActionDefinitionStack.m"; sourceTree = "<group>"; };
+		45583E1685EFDA0B79FD1B14 /* AFHashRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHashRecognizer.h; path = "afid-gui/AFHashRecognizer.h"; sourceTree = "<group>"; };
 		C91C71EF177E0B4A00A362F7 /* afid-gui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "afid-gui.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C91C71F2177E0B4A00A362F7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C91C71F5177E0B4A00A362F7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -49,6 +53,17 @@
 		C91C722B177E0D7400A362F7 /* AFSerialCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSerialCommunicator.m; sourceTree = "<group>"; };
 		C91C7230177E0DE800A362F7 /* AFActionDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFActionDefinition.h; sourceTree = "<group>"; };
 		C91C7231177E0DE800A362F7 /* AFActionDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFActionDefinition.m; sourceTree = "<group>"; };
+		C95727BB17A1714B00ACF2A7 /* AFAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAppController.h; sourceTree = "<group>"; };
+		C95727BC17A1714B00ACF2A7 /* AFAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAppController.m; sourceTree = "<group>"; };
+		C95B035E1799D81A006D8906 /* AFRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFRecognizer.h; sourceTree = "<group>"; };
+		C99B6D53179A186600B16E64 /* AFDataset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFDataset.h; sourceTree = "<group>"; };
+		C99B6D54179A186600B16E64 /* AFDataset.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AFDataset.mm; sourceTree = "<group>"; };
+		C9B33D7517A88A2E00F318E0 /* AFTextDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFTextDisplayController.h; sourceTree = "<group>"; };
+		C9B33D7617A88A2E00F318E0 /* AFTextDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFTextDisplayController.m; sourceTree = "<group>"; };
+		C9C52F9E17A0586E00AE3DA5 /* AFHUDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHUDViewController.h; sourceTree = "<group>"; };
+		C9C52F9F17A0586E00AE3DA5 /* AFHUDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHUDViewController.m; sourceTree = "<group>"; };
+		C9C52FA117A05A8C00AE3DA5 /* AFHUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHUDView.h; sourceTree = "<group>"; };
+		C9C52FA217A05A8C00AE3DA5 /* AFHUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHUDView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +84,6 @@
 			children = (
 				45583BE98FE462B830123EEB /* AFSupervisedLearner.mm */,
 				45583177966C39C4AB916401 /* AFSupervisedLearner.h */,
-				4558326498B4F0057BF1F57F /* AFSupervisedLearnerWrapper.h */,
 			);
 			name = SupervisedLearners;
 			sourceTree = "<group>";
@@ -77,13 +91,11 @@
 		C91C71E6177E0B4A00A362F7 = {
 			isa = PBXGroup;
 			children = (
-				C9E9BAA0178A067A0040249C /* ObjectiveWaffles */,
-				C91C7230177E0DE800A362F7 /* AFActionDefinition.h */,
-				C91C7231177E0DE800A362F7 /* AFActionDefinition.m */,
-				C91C722A177E0D7400A362F7 /* AFSerialCommunicator.h */,
-				C91C722B177E0D7400A362F7 /* AFSerialCommunicator.m */,
-				C91C721A177E0C7400A362F7 /* IOKit.framework */,
 				C91C71F8177E0B4A00A362F7 /* afid-gui */,
+				C95B035A1799D6A3006D8906 /* Models */,
+				C9C52FA417A05A9100AE3DA5 /* Views */,
+				C95B03591799D699006D8906 /* ViewControllers */,
+				C91C721A177E0C7400A362F7 /* IOKit.framework */,
 				C91C71F1177E0B4A00A362F7 /* Frameworks */,
 				C91C71F0177E0B4A00A362F7 /* Products */,
 			);
@@ -124,10 +136,6 @@
 				C91C7207177E0B4A00A362F7 /* MainMenu.xib */,
 				C91C720A177E0B4A00A362F7 /* afid_gui.xcdatamodeld */,
 				C91C71F9177E0B4A00A362F7 /* Supporting Files */,
-				45583C389B25E891AC59C7A6 /* AFHashRecognizer.m */,
-				45583E1685EFDA0B79FD1B14 /* AFHashRecognizer.h */,
-				45583D27F73AD562E8B36841 /* AFActionDefinitionStack.m */,
-				455832E67D60051F8EDFCAE2 /* AFActionDefinitionStack.h */,
 			);
 			path = "afid-gui";
 			sourceTree = "<group>";
@@ -142,6 +150,71 @@
 				C91C7201177E0B4A00A362F7 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C95B03591799D699006D8906 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C95727BB17A1714B00ACF2A7 /* AFAppController.h */,
+				C95727BC17A1714B00ACF2A7 /* AFAppController.m */,
+				C9C52F9E17A0586E00AE3DA5 /* AFHUDViewController.h */,
+				C9C52F9F17A0586E00AE3DA5 /* AFHUDViewController.m */,
+				C9B33D7517A88A2E00F318E0 /* AFTextDisplayController.h */,
+				C9B33D7617A88A2E00F318E0 /* AFTextDisplayController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C95B035A1799D6A3006D8906 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C91C722A177E0D7400A362F7 /* AFSerialCommunicator.h */,
+				C91C722B177E0D7400A362F7 /* AFSerialCommunicator.m */,
+				C95B035D1799D7B2006D8906 /* Recognizers */,
+				C99B6D53179A186600B16E64 /* AFDataset.h */,
+				C99B6D54179A186600B16E64 /* AFDataset.mm */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		C95B035B1799D6B2006D8906 /* AFBoundingRecognizer */ = {
+			isa = PBXGroup;
+			children = (
+				45583D27F73AD562E8B36841 /* AFActionDefinitionStack.m */,
+				455832E67D60051F8EDFCAE2 /* AFActionDefinitionStack.h */,
+				C91C7230177E0DE800A362F7 /* AFActionDefinition.h */,
+				C91C7231177E0DE800A362F7 /* AFActionDefinition.m */,
+			);
+			name = AFBoundingRecognizer;
+			sourceTree = "<group>";
+		};
+		C95B035C1799D6FA006D8906 /* AFHashRecognizer */ = {
+			isa = PBXGroup;
+			children = (
+				45583C389B25E891AC59C7A6 /* AFHashRecognizer.m */,
+				45583E1685EFDA0B79FD1B14 /* AFHashRecognizer.h */,
+			);
+			name = AFHashRecognizer;
+			sourceTree = "<group>";
+		};
+		C95B035D1799D7B2006D8906 /* Recognizers */ = {
+			isa = PBXGroup;
+			children = (
+				C95B035C1799D6FA006D8906 /* AFHashRecognizer */,
+				C95B035B1799D6B2006D8906 /* AFBoundingRecognizer */,
+				C9E9BAA0178A067A0040249C /* ObjectiveWaffles */,
+				C95B035E1799D81A006D8906 /* AFRecognizer.h */,
+			);
+			name = Recognizers;
+			sourceTree = "<group>";
+		};
+		C9C52FA417A05A9100AE3DA5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C9C52FA117A05A8C00AE3DA5 /* AFHUDView.h */,
+				C9C52FA217A05A8C00AE3DA5 /* AFHUDView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		C9E9BAA0178A067A0040249C /* ObjectiveWaffles */ = {
@@ -225,6 +298,11 @@
 				455830CC1F70D2E50CD59B2C /* AFHashRecognizer.m in Sources */,
 				45583888C578BC23B92F0806 /* AFActionDefinitionStack.m in Sources */,
 				4558323DC44DF48BE19F8B1D /* AFSupervisedLearner.mm in Sources */,
+				C99B6D55179A186600B16E64 /* AFDataset.mm in Sources */,
+				C9C52FA017A0586E00AE3DA5 /* AFHUDViewController.m in Sources */,
+				C9C52FA317A05A8C00AE3DA5 /* AFHUDView.m in Sources */,
+				C95727BD17A1714B00ACF2A7 /* AFAppController.m in Sources */,
+				C9B33D7717A88A2E00F318E0 /* AFTextDisplayController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

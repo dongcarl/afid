@@ -65,6 +65,11 @@
 	return self;
 }
 
+- (id)init
+{
+    return [self initAndAutoOpenSerialPortWithBaudRate:2000000];
+}
+
 - (AFSerialCommunicator *)initAndAutoOpenSerialPortWithBaudRate:(speed_t)incomingBaudRate
 {
 	return [self initAndAutoOpenSerialPortWithBaudRate:incomingBaudRate expectedDimensions:10];
@@ -447,6 +452,5 @@
 
 	return resultingErrorFromWrite;
 }
-
 
 @end
