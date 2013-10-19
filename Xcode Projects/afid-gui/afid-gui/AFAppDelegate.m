@@ -222,8 +222,7 @@
         NSArray *currentGestureVector = [self.mainSerialCommunicator nextGestureVector];
         NSLog(@"reading: %@", currentGestureVector);
         
-        [resultingString appendString:[self.incomingCorrespondingStringInput stringValue]];
-        [resultingString appendString:@","];
+//        [resultingString appendString:@","];
         
         for (int i = 0; i < currentGestureVector.count; i++)
         {
@@ -280,22 +279,41 @@
                     break;
             }
             
-            if (i == currentGestureVector.count-1)
-            {
-                [resultingString appendFormat:@"%c", '\n'];
-            }
-            else
-            {
+//            if (i == currentGestureVector.count-1)
+//            {
+//                [resultingString appendFormat:@"%c", '\n'];
+//            }
+//            else
+//            {
                 [resultingString appendString:@","];
-            }
+//            }
         }
+        
+        [resultingString appendFormat:@"%@%c",[self.incomingCorrespondingStringInput stringValue],'\n'];
+        
         self.incomingRemainingGestures.integerValue = self.incomingNumberOfGestureVectorsToRecognize.integerValue - i - 1;
         self.incomingTimeElapsed.stringValue = stringFromInterval(-[start timeIntervalSinceNow]);
         [self.window display];
     }
 
+    
+    NSLog(@"rawpath: %@", [self.incomingExportPath stringValue]);
+    NSString *expandedDirPath = [[self.incomingExportPath stringValue] stringByExpandingTildeInPath];
+    
+    NSString *expandedFixedDirPath;
+    if (![expandedDirPath hasSuffix:@"/"])
+    {
+        expandedFixedDirPath = [NSString stringWithFormat:@"%@%@", expandedDirPath, @"/"];
+    }
+    else
+    {
+        expandedFixedDirPath = expandedDirPath;
+    }
+    NSString *finalDirPath = [NSString stringWithFormat:@"%@%@%@", expandedFixedDirPath, self.incomingCorrespondingStringInput.stringValue, @".txt"];
+    NSLog(@"finalpath: %@", finalDirPath);
+    
     NSError *error;
-    [resultingString writeToFile:[self.incomingExportPath stringValue] atomically:YES encoding:NSASCIIStringEncoding error:&error];
+    [resultingString writeToFile:finalDirPath atomically:YES encoding:NSASCIIStringEncoding error:&error];
 
 }
 
